@@ -1,0 +1,46 @@
+20240531
+
+[swiper]: 슬라이드 소스 사이트(요즘은 다 가지고와서 바꿈)
+core > <script> 스타일 값 가지고 와서 붙여넣기
+
+구글 [timing function]: 애니메이션 움직임 소스
+
+[css animation]: 애니메이션 
+div {
+  animation-name: example; (기본값 순서 맞춰서 넣기)
+  animation-duration: 5s; (기본값 순서 맞춰서 넣기)
+  animation-timing-function: linear;
+  animation-delay: 2s;
+  animation-iteration-count: infinite;
+  
+}
+ 속기
+div {
+  animation: example 5s linear 2s infinite alternate;
+}
+
+[CSS Styling Images]: 창에 마우스 오버시 창 움직이는거
+
+[CSS Pagination] : 페이지 넘기는 화살표 만들기
+.pagination a:hover:not(.active) {background-color: #ddd;} (마우스 오버 안한 건 회색으로 해달라)
+
+resize: none; 검색창 사용자가 임의로 수정 못하게
+
+:root {
+    --primary: #ff1919;
+    --secondary: #3273ff;
+    --default-txt:#222;
+    --white: #fff
+    --blsck: #000
+    --swiper-theme-color: var(--white);
+}
+
+색 저장
+바꿀 색상 지정후 ctrl+f 왼쪽 누르면 전체 바꾸기 가능
+
+[CSS Media Queries]: 화면 사이즈 반응형 만들 때 (모바일 > 데스크탑 변환)
+[CSS MQ Examples](데스크탑 > 모바일 변환)
+
+FLOAT =엣날, FLEX=로 수정
+
+fromhlras

@@ -1,0 +1,1870 @@
+// 모바일 조건식
+var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+/* 효성 TNC 가이드 스크립트 로더 ----------------------------------------------------- */
+var commonGuide = commonGuide || {};
+commonGuide.Html = function () {
+  var instance = null;
+  function init() {
+    instance = {
+      reset: function () {
+        resizeCommonActiveGuide();
+        resizeCommonGuide();
+        scrollCommonGuide();
+        bodyGuide();
+        gnbGuide();
+        // depth3MoveTab();
+      }
+    };
+    return instance;
+  }
+  if (instance) {
+    return instance;
+  } else {
+    return init();
+  }
+}();
+function resizeCommonGuide() {
+  window.addEventListener('resize', () => {
+    resizeCommonActiveGuide();
+  });
+}
+function scrollCommonGuide() {
+  window.addEventListener('scroll', () => {
+    resizeCommonActiveGuide();
+  });
+}
+function resizeCommonActiveGuide() {
+  let windowWidth = window.innerWidth;
+  let windowChangeSize = 1023;
+  let header = document.querySelector('.header.guide');
+  let footer = document.querySelector('.footer.guide');
+  let container = document.querySelector('.container.guide');
+  let index = localStorage.getItem('key');
+  if (windowWidth > windowChangeSize) {
+    header.classList.remove('mo');
+    header.classList.add('pc');
+    footer.classList.remove('mo');
+    footer.classList.add('pc');
+    container.classList.remove('mo');
+    container.classList.add('pc');
+  } else if (windowWidth <= windowChangeSize) {
+    header.classList.remove('pc');
+    header.classList.add('mo');
+    footer.classList.remove('pc');
+    footer.classList.add('mo');
+    container.classList.remove('pc');
+    container.classList.add('mo');
+  }
+}
+function bodyGuide() {
+  const _body = document.querySelector('body');
+  _body.classList.add('guide');
+}
+function gnbGuide() {
+  const buttonGuideGnb = document.querySelectorAll('.button-guide-gnb');
+  buttonGuideGnb.forEach(el => {
+    el.addEventListener('click', () => {
+      if (!el.classList.contains('active')) {
+        el.classList.add('active');
+        if (el.closest('.header')) el.closest('.header-logo').nextElementSibling.classList.add('open');
+      } else {
+        el.classList.remove('active');
+        if (el.closest('.header')) el.closest('.header-logo').nextElementSibling.classList.remove('open');
+      }
+    });
+  });
+  const listGuideGnb = document.querySelectorAll('.accordian-button-view-list .accordian-depth1-add-view-button');
+  listGuideGnb.forEach(el => {
+    el.addEventListener('click', () => {
+      if (!el.closest('.depth1-item').classList.contains('active')) {
+        el.closest('.depth1-item').classList.add('active');
+      } else {
+        el.closest('.depth1-item').classList.remove('active');
+      }
+    });
+  });
+  const buttonAddView = document.querySelectorAll('.guide .button-add-view');
+  buttonAddView.forEach(el => {
+    el.addEventListener('click', () => {
+      if (!el.closest('.guide .button-add-view').classList.contains('active')) {
+        el.closest('.guide .button-add-view').classList.add('active');
+        const listGuideGnb = document.querySelectorAll('.guide-gnb-wrap .accordian-button-view-list .accordian-depth1-add-view-button');
+        const addH = 50;
+        if (el.closest('.accordian-depth1-item')) {
+          let subMenuLength = el.closest('.accordian-depth1-item-inner').nextElementSibling.children.length;
+          el.closest('.accordian-depth1-item-inner').nextElementSibling.style.maxHeight = subMenuLength * addH + 'rem';
+        }
+      } else {
+        el.closest('.guide .button-add-view').classList.remove('active');
+        if (el.closest('.accordian-depth1-item')) el.closest('.accordian-depth1-item-inner').nextElementSibling.style.maxHeight = 0;
+      }
+    });
+  });
+  const dep1Link = $('.accordian-depth1-link');
+  const subLink = $('.accordian-depth2-link');
+  var headerH = $('.header').outerHeight();
+  var addH = 30;
+  var moveSpeed = 500;
+  subLink.on('click', function () {
+    var index = $(this).parents('.depth2-item').index(); // 클릭한 요소 인덱스
+    //var url = document.location.href; // 현재 url 경로
+    var url = window.location.pathname; // 현재 url 경로
+    var urlMove = $(this).parents('.depth1-item').find('.accordian-depth1-link').attr('href'); // 이동할 url 경로
+    // var urlRemove = url.substring(0,url.indexOf("/html")); // url에서 상대경로를 제외한 나머지 문자열
+    // var path = url.replace(urlMove, ""); // 상대경로만 뽑아내기
+    var path = '../..' + url.replace(urlMove); // 상대경로만 뽑아내기
+    localStorage.setItem('key', index);
+    // localStorage를 통해 key값을 storage에 저장하여 페이지가 이동되어도 index값을 유지할 수 있음
+
+    // path == urlMove ? $('html,body').animate({scrollTop: ($('.contents').eq(index).offset().top - headerH - addH)},moveSpeed) : document.location.href = urlMove;
+    // 현재 상대경로와 이동할 상대경로가 같다면 그 페이지에서 scroll, 아니라면 urlMove로 페이지 이동
+    // alert(
+    //     'path = ' + path + '\n' +
+    //     'urlMove = ' + urlMove
+    // );
+    if (path == urlMove) {
+      $('html,body').animate({
+        scrollTop: $('.contents').eq(index).offset().top - headerH - addH
+      }, moveSpeed);
+      return false;
+    } else if (path != urlMove) {
+      document.location.href = urlMove;
+    } else {
+      console.log("error!!");
+    }
+  });
+  if (localStorage.getItem('key')) {
+    headerH = $('.header').outerHeight();
+    var index = localStorage.getItem('key');
+    $('html,body').animate({
+      scrollTop: $('.contents').eq(index).offset().top - headerH - addH
+    }, moveSpeed, function () {
+      window.localStorage.removeItem('key');
+    });
+    // console.log("key : true");
+  } else {
+    // console.log("key : false");
+  }
+}
+
+// footer familysite 클릭이벤트
+function familySite() {
+  const familySiteBtn = document.querySelectorAll('.familysite-button');
+  familySiteBtn.forEach(el => {
+    el.addEventListener('click', () => {
+      !el.classList.contains('active') ? el.classList.add('active') : el.classList.remove('active');
+    });
+  });
+}
+
+/* 효성 TNC 스크립트 로더 ----------------------------------------------------- */
+
+var commonTNC = commonTNC || {};
+commonTNC.Html = function () {
+  var instance = null;
+  function init() {
+    instance = {
+      reset: function () {
+        resizeCommonActiveTNC();
+        resizeCommonTNC();
+        scrollCommonTNC();
+        hyosungTNCgnb();
+        footerFamilySite();
+        footerTop();
+        naviDepth3_Select();
+        tabFunction();
+        closePopupDim();
+        calcVH();
+      }
+    };
+    return instance;
+  }
+  if (instance) {
+    return instance;
+  } else {
+    return init();
+  }
+}();
+function resizeCommonTNC() {
+  window.addEventListener('resize', () => {
+    resizeCommonActiveTNC();
+  });
+}
+function scrollCommonTNC() {
+  window.addEventListener('scroll', () => {
+    resizeCommonActiveTNC();
+  });
+}
+function resizeCommonActiveTNC() {
+  const _window = window;
+  const windowWidth = _window.innerWidth;
+  const tabletChangeSize = 1259;
+  const mobileChangeSize = 1023;
+  const header = document.querySelector('.header.tnc');
+  const footer = document.querySelector('.footer.tnc');
+  const container = document.querySelector('.container.tnc');
+  if (windowWidth > tabletChangeSize) {
+    header.classList.remove('ta');
+    header.classList.remove('mo');
+    header.classList.add('pc');
+    footer.classList.remove('ta');
+    footer.classList.remove('mo');
+    footer.classList.add('pc');
+    container.classList.remove('ta');
+    container.classList.remove('mo');
+    container.classList.add('pc');
+  } else if (windowWidth <= tabletChangeSize && windowWidth > mobileChangeSize) {
+    header.classList.remove('pc');
+    header.classList.remove('mo');
+    header.classList.add('ta');
+    footer.classList.remove('pc');
+    footer.classList.remove('mo');
+    footer.classList.add('ta');
+    container.classList.remove('pc');
+    container.classList.remove('mo');
+    container.classList.add('ta');
+  } else if (windowWidth <= mobileChangeSize) {
+    header.classList.remove('pc');
+    header.classList.remove('ta');
+    header.classList.add('mo');
+    footer.classList.remove('pc');
+    footer.classList.remove('ta');
+    footer.classList.add('mo');
+    container.classList.remove('pc');
+    container.classList.remove('ta');
+    container.classList.add('mo');
+  }
+}
+
+// footer family-site
+function footerFamilySite() {
+  const accordionFooterFamilySite = $('.accordion-footer-family-site');
+  const buttonFamilySite = accordionFooterFamilySite.find('.button-family-site');
+  buttonFamilySite.on('click', function () {
+    const _bfsThis = $(this);
+    !_bfsThis.hasClass('active') ? _bfsThis.addClass('active') : _bfsThis.removeClass('active');
+  });
+}
+
+// footer top 버튼
+function footerTop() {
+  const _window = $(window);
+  const _document = $(document);
+  $('.btn_top').off('click').on('click', function () {
+    $('body,html').animate({
+      scrollTop: 0
+    }, 300);
+    return false;
+  });
+  _window.on('scroll', function () {
+    var floatingBtns = $('#pageTop');
+
+    // bottom fixed 요소 푸터위에 고정
+    var scrollBottom = _document.height() - _window.height() - _window.scrollTop();
+    if (scrollBottom >= $('#footer').innerHeight()) {
+      floatingBtns.removeClass('meetFooter');
+    } else {
+      floatingBtns.addClass('meetFooter');
+    }
+
+    // 브라우저 높이만큼 스크롤 시 bottom fixed 요소 노출
+    var win_h = _window.height();
+    var floatingPoint = win_h;
+    if (_window.scrollTop() > floatingPoint) {
+      $('#pageTop').addClass('show');
+    } else {
+      $('#pageTop').removeClass('show');
+    }
+  });
+}
+
+// 서브 공통 active evevnt
+// 60퍼센트 or 커스텀 위치일때 active
+function contentsSubScrollEventCustom() {
+  let _window = $(window);
+  let conH = {
+    h0000: 0,
+    winH60per: parseInt(_window.innerHeight() * 0.6),
+    winHAd: parseInt(_window.innerHeight() * 0.8) // 커스텀 조절 마이너스 범위
+  };
+  let windowScrollTop = _window.scrollTop();
+  let contentsSection = $('.container-inner .contents-section');
+  if (contentsSection.hasClass('contents-section')) {
+    const contentsArticle = contentsSection.find('.contents-article');
+    //const tabContentsItem = contentsArticle.find('.tab-sustainability-content-item')
+    for (let i = 0; i < contentsSection.length; i++) {
+      if (parseInt(windowScrollTop) >= contentsSection.eq(i).offset().top - conH.winHAd) {
+        contentsSection.eq(i).addClass('active');
+      } else if (parseInt(windowScrollTop) < contentsSection.eq(i).offset().top - conH.winHAd) {
+        contentsSection.eq(i).removeClass('active');
+      } else {
+        // console.log('옵셋 값 : ' + (contentsSection.eq(i).offset().top - conH.h0000) + ' => 에러!!');
+      }
+    }
+    for (let j = 0; j < contentsArticle.length; j++) {
+      if (parseInt(windowScrollTop) >= contentsArticle.eq(j).offset().top - conH.winHAd) {
+        contentsArticle.eq(j).addClass('active');
+      } else if (parseInt(windowScrollTop) < contentsArticle.eq(j).offset().top - conH.winHAd) {
+        contentsArticle.eq(j).removeClass('active');
+      } else {
+        // console.log('옵셋 값 : ' + (contentsArticle.eq(j).offset().top - conH.winH60per) + ' => 에러!!');
+      }
+    }
+  }
+}
+
+// 섹션 다 올라오면 active
+function contentsSubScrollEventCustom01() {
+  let _window = $(window);
+  let conH = {
+    h0000: 0,
+    winH60per: parseInt(_window.innerHeight() * 0.6),
+    winHAd: parseInt(_window.innerHeight() * 0.7) // 커스텀 조절 마이너스 범위
+  };
+  let windowScrollTop = _window.scrollTop();
+  let contentsSection = $('.container-inner .contents-section');
+  if (contentsSection.hasClass('contents-section')) {
+    const contentsArticle = contentsSection.find('.contents-article');
+    //const tabContentsItem = contentsArticle.find('.tab-sustainability-content-item')
+    for (let i = 0; i < contentsSection.length; i++) {
+      if (parseInt(windowScrollTop) >= contentsSection.eq(i).offset().top - conH.h0000) {
+        contentsSection.eq(i).addClass('active');
+      } else if (parseInt(windowScrollTop) < contentsSection.eq(i).offset().top - conH.h0000) {
+        contentsSection.eq(i).removeClass('active');
+      } else {
+        // console.log('옵셋 값 : ' + (contentsSection.eq(i).offset().top - conH.h0000) + ' => 에러!!');
+      }
+    }
+    for (let j = 0; j < contentsArticle.length; j++) {
+      if (parseInt(windowScrollTop) >= contentsArticle.eq(j).offset().top - conH.h0000) {
+        contentsArticle.eq(j).addClass('active');
+      } else if (parseInt(windowScrollTop) < contentsArticle.eq(j).offset().top - conH.h0000) {
+        contentsArticle.eq(j).removeClass('active');
+      } else {
+        // console.log('옵셋 값 : ' + (contentsArticle.eq(j).offset().top - conH.winH60per) + ' => 에러!!');
+      }
+    }
+  }
+}
+
+/******************************* Sub Navi & Key Visual*******************************/
+
+// 서브 공통 MouseWheel naviDepth3
+function subPageIntroWheel_01() {
+  var controller1 = null;
+  var controller2 = null;
+  var width = $(window).innerWidth();
+  function initScrollMagic() {
+    controller1 = new ScrollMagic.Controller();
+    var scrollTrigger1 = new ScrollMagic.Scene({
+      triggerElement: '.contents-section2',
+      triggerHook: 'onEnter',
+      offset: 0,
+      reverse: true
+    }).on('enter', function () {
+      var contentsSection2_T = $('.contents-section.contents-section2').offset().top;
+      $('html, body').stop().animate({
+        scrollTop: contentsSection2_T
+      }, 1000, 'easeOutCubic');
+    })
+    // .addIndicators({
+    //     name: "1"
+    // })
+    .addTo(controller1);
+    controller2 = new ScrollMagic.Controller();
+    var scrollTrigger2 = new ScrollMagic.Scene({
+      triggerElement: '.contents-section2',
+      triggerHook: 'onLeave',
+      offset: -10,
+      reverse: true
+    }).on('leave', function () {
+      let win_H = $(window).innerHeight();
+      let win_H_half = parseInt(win_H / 2);
+      $('html, body').stop().animate({
+        scrollTop: win_H_half
+      }, 1000, 'easeOutCubic');
+    })
+    // .addIndicators({
+    //     name: "2"
+    // })
+    .addTo(controller2);
+  }
+  if (width > 1024) {
+    initScrollMagic();
+  }
+  $(window).resize(function () {
+    var width = $(window).innerWidth();
+    if (width < 1024) {
+      if (controller1) {
+        controller1 = controller1.destroy(true);
+      }
+    } else if (width >= 1024) {
+      if (!controller1) {
+        initScrollMagic();
+      }
+    }
+    if (width < 1024) {
+      if (controller2) {
+        controller2 = controller2.destroy(true);
+      }
+    } else if (width >= 1024) {
+      if (!controller2) {
+        initScrollMagic();
+      }
+    }
+  });
+}
+
+// 서브 공통 MouseWheel naviDepth3, naviDepth4
+function subPageIntroWheel_02() {
+  var controller1 = null;
+  var controller2 = null;
+  var width = $(window).innerWidth();
+  function initScrollMagic() {
+    controller1 = new ScrollMagic.Controller();
+    var scrollTrigger1 = new ScrollMagic.Scene({
+      triggerElement: '.contents-section2',
+      triggerHook: 'onEnter',
+      offset: -100,
+      reverse: true
+    }).on('enter', function () {
+      let localNavi3 = $('.navi.depth3');
+      let localNavi3_H = parseInt(localNavi3.innerHeight());
+      let localNavi4 = $('.navi.depth4');
+      let naviDepth4_H = parseInt($('.navi.depth4').innerHeight());
+      let contentsSection1_H = parseInt($('.contents-section.contents-section1').innerHeight());
+      let contentsSection2_T = $('.contents-section.contents-section2').offset().top;
+      $('html, body').stop().animate({
+        scrollTop: contentsSection1_H + localNavi3_H
+      }, 1000, 'easeOutCubic');
+    })
+    //.addIndicators()
+    .addTo(controller1);
+    controller2 = new ScrollMagic.Controller();
+    var scrollTrigger2 = new ScrollMagic.Scene({
+      triggerElement: '.contents-section2',
+      triggerHook: 'onLeave',
+      offset: -100,
+      reverse: true
+    }).on('leave', function () {
+      let win_H = $(window).innerHeight();
+      let win_H_half = parseInt(win_H / 2);
+      $('html, body').stop().animate({
+        scrollTop: win_H_half
+      }, 1000, 'easeOutCubic');
+    })
+    //.addIndicators()
+    .addTo(controller2);
+  }
+  if (width > 1024) {
+    initScrollMagic();
+  }
+  $(window).resize(function () {
+    var width = $(window).innerWidth();
+    if (width < 1024) {
+      if (controller1) {
+        controller1 = controller1.destroy(true);
+      }
+    } else if (width >= 1024) {
+      if (!controller1) {
+        initScrollMagic();
+      }
+    }
+    if (width < 1024) {
+      if (controller2) {
+        controller2 = controller2.destroy(true);
+      }
+    } else if (width >= 1024) {
+      if (!controller2) {
+        initScrollMagic();
+      }
+    }
+  });
+}
+
+// 서브 공통 Info Interaction
+//sustainability intro
+function localInteraction_04_01() {
+  var localInfo = $('.local-head');
+  let sustainability_LocalTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      id: "local-head1",
+      trigger: '.local.sustainability-common',
+      start: "3% top",
+      end: "center center",
+      // markers: {
+      //     startColor: 'red',
+      //     endColor: 'blue',
+      //     fontSize: '1.6rem',
+      //     indent: 200
+      // },
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none reverse none",
+      onEnter: () => {
+        localInfo.addClass('action-01');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localInfo.removeClass('action-01');
+      }
+    }
+  });
+
+  // 240102 ys 주석처리 (이미지 width:100%로 확장되는 인터랙션)
+  // const sustainability_LocalTrigger_02 = gsap.timeline({
+  //     scrollTrigger: {
+  //         id: "local-head2",
+  //         trigger: '.local.sustainability-common',
+  //         start: "bottom+=30% bottom",
+  //         end: "bottom bottom",
+  //         //markers: true,
+  //         //scrub: 1,
+  //         pinSpacing: false,
+  //         //toggleActions: "play none none reverse",
+  //         onEnter: () => {
+  //             localInfo.addClass('action-02');
+  //         },
+  //         onLeave: () => {
+  //         },
+  //         onEnterBack: () => {
+  //         },
+  //         onLeaveBack: () => {
+  //             localInfo.removeClass('action-02');
+  //         }
+  //     }
+  // });
+}
+
+//Company intro
+function localInteraction_04_02() {
+  const _header = $('.header.tnc.site');
+  const companyLocal = $('.local.company-common');
+  const companyBigEng = companyLocal.find('.local-desc');
+  var width = $(window).innerWidth();
+
+  // if( width > 1024 ) {
+  //     header.css('background-color', 'transparent');
+  // }
+  companyLocal.addClass('active');
+  const company_LocalTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      id: "company-head1",
+      trigger: '.local.company-common',
+      start: "top top",
+      end: "90% top",
+      // markers: true,
+      scrub: 2,
+      pinSpacing: false,
+      toggleActions: "play none none reverse"
+    }
+  });
+  company_LocalTrigger_01.to(companyBigEng, {
+    left: 0
+  });
+}
+
+//brand intro
+function localInteraction_04_03() {
+  let localInfo = $('.local-head');
+  let sect2 = $('.contents-section2');
+  let bg = sect2.attr('data-bg');
+  let arti1 = sect2.find('.contents-article1');
+  let body = $('.tnc-site');
+  let brandCommon = '.local.brand-common';
+  console.log(bg);
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.matchMedia({
+    "(min-width: 1024px)": function () {
+      const brand_LocalTrigger_pc = gsap.timeline({
+        scrollTrigger: {
+          id: "brand-head1",
+          trigger: localInfo,
+          start: "top top",
+          // markers: true,
+          onEnter: () => {
+            localInfo.addClass('action-01');
+            body.css({
+              'background': bg,
+              'transition': 'background .5s'
+            });
+            sect2.addClass('active2');
+            // arti1.addClass('active2');
+          },
+          onLeave: () => {},
+          onEnterBack: () => {},
+          onLeaveBack: () => {
+            localInfo.removeClass('action-01');
+            body.css({
+              'background': ''
+            });
+            sect2.removeClass('active2');
+            // arti1.removeClass('active2');
+          }
+        }
+      });
+    },
+    "(max-width: 1023px)": function () {
+      const brand_LocalTrigger_mo_01 = gsap.timeline({
+        scrollTrigger: {
+          id: "brand-head1",
+          trigger: brandCommon,
+          start: "top top",
+          // markers: true,
+          onEnter: () => {
+            localInfo.addClass('action-01');
+            body.css({
+              'background': bg,
+              'transition': 'background .5s'
+            });
+          },
+          onLeave: () => {},
+          onEnterBack: () => {},
+          onLeaveBack: () => {
+            localInfo.removeClass('action-01');
+            body.css({
+              'background': ''
+            });
+          }
+        }
+      });
+      const brand_LocalTrigger_mo_02 = gsap.timeline({
+        scrollTrigger: {
+          id: "brand-head1",
+          trigger: brandCommon,
+          start: "bottom+=10% bottom",
+          end: "bottom bottom",
+          // markers: true,
+          onEnter: () => {
+            sect2.addClass('active2');
+            // arti1.addClass('active2');
+            console.log("mo2");
+          },
+          onLeave: () => {},
+          onEnterBack: () => {},
+          onLeaveBack: () => {
+            sect2.removeClass('active2');
+            // arti1.removeClass('active2');
+          }
+        }
+      });
+    }
+  });
+}
+
+//business intro - v1
+function localInteraction_04_04() {
+  const businessType01 = $('.local.business-common .business-common-type01');
+  const businessType02 = $('.local.business-common .business-common-type02');
+  const businessBody = businessType02.find('.local-body');
+  const businessBodyThumbMain = businessBody.find('.thumbnail-main');
+  const businessBodyThumbMainBody = businessBodyThumbMain.find('.thumbnail-body');
+  const businessInform = businessBodyThumbMainBody.find('.thumbnail-inform');
+  const businessInformInner1 = businessInform.find('.thumbnail-inform-inner1');
+  const businessInformInner2 = businessInform.find('.thumbnail-inform-inner2');
+  const header = $('.header.tnc.site');
+  var width = $(window).innerWidth();
+
+  // if( width > 1024 ) {
+  //     header.css('background-color', 'transparent');
+  // };
+
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.matchMedia({
+    "(min-width: 1024px)": function () {
+      gsap.to(businessType01, {
+        scrollTrigger: {
+          trigger: businessType01,
+          start: '30% top',
+          end: 'bottom bottom',
+          toggleActions: "restart none none reverse",
+          invalidateOnRefresh: true,
+          // markers: true,
+          onEnter() {
+            // var businessType02Top = businessType02.offset().top;
+            // $('html, body').stop().animate({ scrollTop: businessType02Top }, 1000, 'easeOutCubic');
+
+            businessType01.addClass('active');
+            businessType02.addClass('active');
+          },
+          onLeaveBack() {
+            businessType01.removeClass('active');
+            businessType02.removeClass('active');
+          }
+        }
+      });
+      const business_LocalTrigger_01_pc = gsap.timeline({
+        scrollTrigger: {
+          id: "business-body1",
+          trigger: businessBody,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 2,
+          toggleActions: "play none none reverse",
+          invalidateOnRefresh: true
+          // markers: true,
+        }
+      });
+      business_LocalTrigger_01_pc.addLabel("blt1Pc").fromTo(businessBodyThumbMain, {
+        width: 'calc(23.125vw - 2.4rem)',
+        duration: 0.3
+      }, {
+        width: '91.667vw',
+        duration: 0.3
+      }, 'blt1Pc').fromTo(businessBodyThumbMainBody, {
+        height: '36.563vw',
+        duration: 0.3
+      }, {
+        height: '42.24vw',
+        duration: 0.3
+      }, 'blt1Pc').fromTo(businessInformInner1, {
+        transform: 'translateY(15vh)',
+        opacity: 0,
+        duration: 0.3
+      }, {
+        transform: 'translateY(-50%)',
+        opacity: 1,
+        duration: 0.3
+      }, 'blt1Pc+=0.1').to(businessInformInner1, {
+        opacity: 0,
+        duration: 0.3
+      }, 'blt1Pc+=0.6').to(businessBodyThumbMain, {
+        width: 'calc(100vw + 3.2rem)',
+        duration: 0.3
+      }, 'blt1Pc+=0.8').to(businessBodyThumbMainBody, {
+        height: '100vh',
+        borderRadius: '0',
+        duration: 0.3,
+        onComplete: function () {
+          businessInform.addClass('on');
+        },
+        onReverseComplete: function () {
+          businessInform.removeClass('on');
+        }
+      }, 'blt1Pc+=0.8').fromTo(businessInformInner2, {
+        transform: 'translateY(15vh)',
+        opacity: 0,
+        duration: 0.3
+      }, {
+        transform: 'translateY(-50%)',
+        opacity: 1,
+        duration: 0.3
+      }, 'blt1Pc+=1.1').to(businessInformInner2, {
+        transform: 'translateY(-50%)',
+        opacity: 1,
+        duration: 0.3,
+        delay: 0.5
+      }, 'blt1Pc+=1.1');
+    },
+    "(max-width: 1023px)": function () {
+      const business_LocalTrigger_01_mo = gsap.timeline({
+        scrollTrigger: {
+          id: "business-body1",
+          trigger: businessBody,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 2,
+          toggleActions: "play none none reverse",
+          invalidateOnRefresh: true
+          // markers: true,
+        }
+      });
+      business_LocalTrigger_01_mo.addLabel("blt1Mo").fromTo(businessBodyThumbMain, {
+        width: '90.4%',
+        duration: 0.3
+      }, {
+        width: '100%',
+        duration: 0.3
+      }, 'blt1Mo').fromTo(businessBodyThumbMainBody, {
+        height: '69.705vh',
+        duration: 0.3
+      }, {
+        height: '100vh',
+        duration: 0.3
+      }, 'blt1Mo').fromTo(businessBodyThumbMainBody, {
+        borderRadius: '1.6rem',
+        duration: 0.3
+      }, {
+        borderRadius: '0',
+        duration: 0.3
+      }, 'blt1Mo').fromTo(businessInformInner1, {
+        transform: 'translateY(10vh)',
+        opacity: 0,
+        duration: 0.3
+      }, {
+        transform: 'translateY(-50%)',
+        opacity: 1,
+        duration: 0.3
+      }, 'blt1Mo+=0.1').to(businessInformInner1, {
+        opacity: 0,
+        duration: 0.3
+      }, 'blt1Mo+=0.6').to(businessBodyThumbMain, {
+        width: '100%',
+        duration: 0.3
+      }, 'blt1Mo+=0.8').to(businessBodyThumbMainBody, {
+        height: '100vh',
+        duration: 0.3,
+        onComplete: function () {
+          businessInform.addClass('on');
+        },
+        onReverseComplete: function () {
+          businessInform.removeClass('on');
+        }
+      }, 'blt1Mo+=0.8').fromTo(businessInformInner2, {
+        transform: 'translateY(10vh)',
+        opacity: 0,
+        duration: 0.3
+      }, {
+        transform: 'translateY(-50%)',
+        opacity: 1,
+        duration: 0.3
+      }, 'blt1Mo+=1.1').to(businessInformInner2, {
+        transform: 'translateY(-50%)',
+        opacity: 1,
+        duration: 0.3,
+        delay: 0.5
+      }, 'blt1Mo+=1.1');
+    }
+  });
+  window.addEventListener("resize", ScrollTrigger.update);
+}
+
+//business intro - v2
+function localInteraction_04_05() {
+  const businessType01 = $('.local.business-common .business-common-type01');
+  const businessType02 = $('.local.business-common .business-common-type02');
+  const businessBody = businessType02.find('.local-body');
+  const businessBodyThumbMain = businessBody.find('.thumbnail-main');
+  const businessBodyThumbMainBody = businessBodyThumbMain.find('.thumbnail-body');
+  const businessInform = businessBodyThumbMainBody.find('.thumbnail-inform');
+  const businessInformInner1 = businessInform.find('.thumbnail-inform-inner1');
+  const header = $('.header.tnc.site');
+  var width = $(window).innerWidth();
+
+  // if( width > 1024 ) {
+  //     header.css('background-color', 'transparent');
+  // };
+
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.matchMedia({
+    "(min-width: 1024px)": function () {
+      gsap.to(businessType01, {
+        scrollTrigger: {
+          trigger: businessType01,
+          start: '30% top',
+          end: 'bottom bottom',
+          toggleActions: "restart none none reverse",
+          invalidateOnRefresh: true,
+          // markers: true,
+          onEnter() {
+            // var businessType02Top = businessType02.offset().top;
+            // $('html, body').stop().animate({ scrollTop: businessType02Top }, 1000, 'easeOutCubic');
+
+            businessType01.addClass('active');
+            businessType02.addClass('active');
+          },
+          onLeaveBack() {
+            businessType01.removeClass('active');
+            businessType02.removeClass('active');
+          }
+        }
+      });
+      const business_LocalTrigger_01_pc = gsap.timeline({
+        scrollTrigger: {
+          id: "business-body1",
+          trigger: businessBody,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 2,
+          toggleActions: "play none none reverse",
+          invalidateOnRefresh: true
+          // markers: true,
+        }
+      });
+      business_LocalTrigger_01_pc.addLabel("blt2Pc").fromTo(businessBodyThumbMain, {
+        width: 'calc(23.125vw - 2.4rem)',
+        duration: 0.3
+      }, {
+        width: '91.667vw',
+        duration: 0.3
+      }, 'blt2Pc').fromTo(businessBodyThumbMainBody, {
+        height: '36.563vw',
+        duration: 0.3
+      }, {
+        height: '42.24vw',
+        duration: 0.3
+      }, 'blt2Pc').fromTo(businessInformInner1, {
+        transform: 'translateY(15vh)',
+        opacity: 0,
+        duration: 0.3
+      }, {
+        transform: 'translateY(-50%)',
+        opacity: 1,
+        duration: 0.3
+      }, 'blt2Pc+=0.1').to(businessBodyThumbMain, {
+        width: 'calc(100vw + 3.2rem)',
+        duration: 0.3
+      }, 'blt2Pc+=0.8').to(businessBodyThumbMainBody, {
+        height: '100vh',
+        borderRadius: '0',
+        duration: 0.3,
+        onComplete: function () {
+          businessInform.addClass('on');
+        },
+        onReverseComplete: function () {
+          businessInform.removeClass('on');
+        }
+      }, 'blt2Pc+=0.8').to(businessBodyThumbMainBody, {
+        height: '100vh',
+        duration: 0.3
+      }, 'blt2Pc+=1.3');
+    },
+    "(max-width: 1023px)": function () {
+      const business_LocalTrigger_01_mo = gsap.timeline({
+        scrollTrigger: {
+          id: "business-body1",
+          trigger: businessBody,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 2,
+          toggleActions: "play none none reverse",
+          invalidateOnRefresh: true
+          // markers: true,
+        }
+      });
+      business_LocalTrigger_01_mo.addLabel("blt2Mo").fromTo(businessBodyThumbMain, {
+        width: '90.4%',
+        duration: 0.3
+      }, {
+        width: '100%',
+        duration: 0.3
+      }, 'blt2Mo').fromTo(businessBodyThumbMainBody, {
+        height: '69.705vh',
+        duration: 0.3
+      }, {
+        height: '100vh',
+        duration: 0.3
+      }, 'blt2Mo').fromTo(businessBodyThumbMainBody, {
+        borderRadius: '1.6rem',
+        duration: 0.3
+      }, {
+        borderRadius: '0',
+        duration: 0.3
+      }, 'blt2Mo').fromTo(businessInformInner1, {
+        transform: 'translateY(10vh)',
+        opacity: 0,
+        duration: 0.3
+      }, {
+        transform: 'translateY(-50%)',
+        opacity: 1,
+        duration: 0.3
+      }, 'blt2Mo+=0.1').to(businessBodyThumbMain, {
+        width: '100%',
+        duration: 0.3
+      }, 'blt2Mo+=0.8').to(businessBodyThumbMainBody, {
+        height: '100vh',
+        duration: 0.3,
+        onComplete: function () {
+          businessInform.addClass('on');
+        },
+        onReverseComplete: function () {
+          businessInform.removeClass('on');
+        }
+      }, 'blt2Mo+=0.8').to(businessBodyThumbMainBody, {
+        height: '100vh',
+        borderRadius: '0',
+        duration: 0.3
+      }, 'blt2Pc+=1.3');
+    }
+  });
+}
+
+// 서브 공통 naviDepth3가 따라 내려오는 공통
+function naviDepth3_Interaction_01() {
+  let localNavi = $('.navi.depth3');
+  $(localNavi).addClass('case-1');
+  const naviDepth3_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      id: "navi-1",
+      trigger: '.contents-section1',
+      start: "bottom+=20% bottom",
+      end: "bottom bottom",
+      //markers: true,
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none none reverse",
+      onEnter: () => {
+        localNavi.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi.removeClass('action');
+      }
+    }
+  });
+}
+
+// 서브 공통 naviDepth3 fixed,  naviDepth4 따라 내려옴
+function naviDepth3_Interaction_02() {
+  let localNavi3 = $('.navi.depth3');
+  let localNavi4 = $('.navi.depth4');
+  $(localNavi3).addClass('case-2');
+  $(localNavi4).addClass('case-1');
+  const naviDepth3_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.contents-section1',
+      start: "bottom+=20% bottom",
+      end: "bottom bottom",
+      //markers: true,
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none none reverse",
+      onEnter: () => {
+        localNavi3.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi3.removeClass('action');
+      }
+    }
+  });
+  const naviDepth4_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      trigger: localNavi4,
+      start: "50px top",
+      end: "bottom bottom",
+      //markers: true,
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none none reverse",
+      onEnter: () => {
+        localNavi4.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi4.removeClass('action');
+      }
+    }
+  });
+}
+
+//Company navi - 01 (naviDepth4 있는 경우)
+function naviDepth3_Interaction_03() {
+  let localNavi = $('.navi.depth3');
+  let localNavi4 = $('.navi.depth4');
+  $(localNavi).addClass('case-3');
+  $(localNavi4).addClass('case-1');
+  const naviDepth3_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      id: "navi-1",
+      trigger: '.contents-section1',
+      start: "bottom+=20% bottom",
+      end: "bottom bottom",
+      //markers: true,
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none none reverse",
+      onEnter: () => {
+        localNavi.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi.removeClass('action');
+      }
+    }
+  });
+  const naviDepth4_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      trigger: localNavi4,
+      start: "50px top",
+      end: "bottom bottom",
+      //markers: true,
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none none reverse",
+      onEnter: () => {
+        localNavi4.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi4.removeClass('action');
+      }
+    }
+  });
+}
+
+//Company navi - 02 (naviDepth3만 있는 경우)
+function naviDepth3_Interaction_04() {
+  let localNavi = $('.navi.depth3');
+  $(localNavi).addClass('case-4');
+  const naviDepth3_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      id: "navi-1",
+      trigger: '.contents-section1',
+      start: "bottom+=20% bottom",
+      end: "bottom bottom",
+      //markers: true,
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none none reverse",
+      onEnter: () => {
+        localNavi.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi.removeClass('action');
+      }
+    }
+  });
+}
+
+// Brand navi - 01 (naviDepth3만 있는 경우)
+function naviDepth3_Interaction_05() {
+  let localInfo = $('.local-head');
+  let localNavi = $('.navi.depth3');
+  $(localNavi).addClass('case-5');
+  const naviDepth3_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      id: "navi-1",
+      trigger: localInfo,
+      start: "top+=1px top",
+      end: "bottom bottom",
+      // markers: true,
+      onEnter: () => {
+        localNavi.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi.removeClass('action');
+      }
+    }
+  });
+}
+
+// Brand navi - 02 (naviDepth4 있는 경우)
+function naviDepth3_Interaction_07() {
+  let localInfo = $('.local-head');
+  let localNavi = $('.navi.depth3');
+  let localNavi4 = $('.navi.depth4');
+  $(localNavi).addClass('case-7');
+  $(localNavi4).addClass('case-2');
+  const naviDepth3_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      id: "navi-1",
+      trigger: localInfo,
+      start: "top+=1px top",
+      end: "bottom bottom",
+      // markers: true,
+      onEnter: () => {
+        localNavi.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi.removeClass('action');
+      }
+    }
+  });
+  const naviDepth4_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      trigger: localInfo,
+      start: "top+=1px top",
+      end: "bottom bottom",
+      //markers: true,
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none none reverse",
+      onEnter: () => {
+        localNavi4.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi4.removeClass('action');
+      }
+    }
+  });
+}
+
+// business navi - 01 (naviDepth4 있는 경우)
+function naviDepth3_Interaction_06() {
+  let localNavi = $('.navi.depth3');
+  let localNavi4 = $('.navi.depth4');
+  $(localNavi).addClass('case-6');
+  $(localNavi4).addClass('case-1');
+  const naviDepth4_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      trigger: localNavi4,
+      start: "50px top",
+      end: "bottom bottom",
+      //markers: true,
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none none reverse",
+      onEnter: () => {
+        localNavi4.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi4.removeClass('action');
+      }
+    }
+  });
+}
+
+// business navi - 02 (naviDepth3만 있는 경우)
+function naviDepth3_Interaction_08() {
+  let localNavi = $('.navi.depth3');
+  let localBodyWrap = $('.business-common-type02 .local-body-wrap');
+  $(localNavi).addClass('case-6 type-1');
+  const naviDepth3_CaseTrigger_01 = gsap.timeline({
+    scrollTrigger: {
+      id: "navi-1",
+      trigger: localBodyWrap,
+      start: "-76px top",
+      end: "bottom bottom",
+      //markers: true,
+      //scrub: 1,
+      pinSpacing: false,
+      //toggleActions: "play none none reverse",
+      onEnter: () => {
+        localNavi.addClass('action');
+      },
+      onLeave: () => {},
+      onEnterBack: () => {},
+      onLeaveBack: () => {
+        localNavi.removeClass('action');
+      }
+    }
+  });
+}
+
+// business 주요제품 클릭이벤트
+function businessClickEvent() {
+  var $boardProductList = $('.board-product-list'),
+    $productWrap = $boardProductList.find('.product-wrap'),
+    $productContentList = $('.product-content-list');
+  $productWrap.on('click', function () {
+    var contentIdx = $(this).data('product');
+    var contentIdxTop = $productContentList.find('.product-content-item[data-product="' + contentIdx + '"]').offset().top - 100;
+    $('body, html').animate({
+      scrollTop: contentIdxTop
+    }, 600);
+  });
+}
+
+// business cursor (마우스 커서에 따른 이미지 변경)
+function businessMouseMove() {
+  var $boardProductList = $('.board-product-list'),
+    $productWrap = $boardProductList.find('.product-wrap');
+  $productWrap.each(function () {
+    $(this).mousemove(function (e) {
+      console.log('test');
+      var mouseX = e.pageX - $(this).offset().left;
+      var mouseY = e.pageY - $(this).offset().top;
+      $(this).find('.picture').css({
+        left: mouseX + "px",
+        top: mouseY + "px"
+      });
+    });
+  });
+}
+
+// naviDepth3 select
+function naviDepth3_Select() {
+  var container = $('.container');
+  var naviDepth3 = $('.navi.depth3');
+  var naviName = $('.navi.depth3').find('.navi-name');
+  naviName.on('click', function (e) {
+    e.preventDefault();
+    if (container.hasClass('mo')) {
+      naviDepth3.toggleClass('active');
+    }
+  });
+}
+
+/******************************* Sub Navi & Key Visual*******************************/
+
+// Tab
+function tabFunction() {
+  const _container = $('.container');
+  const tabDisplay = $(".tab-display");
+  const tab = tabDisplay.find(".tab.form-1");
+  tab.click(function () {
+    let tabIndex = $(this).index();
+    $(this).siblings().removeClass("active");
+    $(this).addClass("active");
+    const boardDisplay = $(this).parents('.tab-display').find('.board-display');
+    boardDisplay.addClass('blind');
+    boardDisplay.eq(tabIndex).removeClass('blind');
+  });
+  const tabD2 = $('.tab-display.design-2');
+  const tabD2C1 = tabD2.find('.tab.case-1');
+  tabD2C1.click(function () {
+    $(this).closest('.tab-item').siblings().removeClass('active');
+    $(this).closest('.tab-item').addClass('active');
+  });
+  if (_container.hasClass('mo')) {
+    tabD2.find('.tab-item').removeClass('active');
+  } else {
+    tabD2.find('.tab-item').eq(0).addClass('active');
+  }
+}
+
+// Mobile에서 슬라이드로 바뀌는 thumbnail
+// 선택자, 슬라이드 간격 입력하여 호출
+function thumbSwiper(selector, spaceBetween) {
+  const breakpoint = window.matchMedia('(min-width:1024px)');
+  let onlyMoSwiper;
+  const breakpointChecker = function () {
+    if (breakpoint.matches === true) {
+      if (onlyMoSwiper !== undefined) onlyMoSwiper.destroy(true, true);
+      return;
+    } else if (breakpoint.matches === false) {
+      return enableSwiper();
+    }
+  };
+  const enableSwiper = function () {
+    onlyMoSwiper = new Swiper(selector, {
+      slidesPerView: 'auto',
+      spaceBetween: spaceBetween
+    });
+  };
+  breakpoint.addListener(breakpointChecker);
+  breakpointChecker();
+}
+
+// Mobile에서 슬라이드로 바뀌는 thumbnail type-2
+function thumbSwiper2(selector, spaceBetween) {
+  const breakpoint = window.matchMedia('(min-width:1024px)');
+  let onlyMoSwiper;
+  const breakpointChecker = function () {
+    if (breakpoint.matches === true) {
+      if (onlyMoSwiper !== undefined) onlyMoSwiper.destroy(true, true);
+      return;
+    } else if (breakpoint.matches === false) {
+      return enableSwiper();
+    }
+  };
+  const enableSwiper = function () {
+    onlyMoSwiper = new Swiper(selector, {
+      slidesPerView: 'auto',
+      spaceBetween: spaceBetween,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev"
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        type: "fraction"
+      }
+    });
+  };
+  breakpoint.addListener(breakpointChecker);
+  breakpointChecker();
+}
+
+// Mobile에서 슬라이드로 바뀌는 tab
+function tabSwiper(selector, spaceBetween) {
+  const tabD2 = $('.tab-display.design-2');
+  const breakpoint = window.matchMedia('(min-width:1024px)');
+  let onlyMoSwiper;
+  const breakpointChecker = function () {
+    let tabIndex1 = tabD2.find('.tab-item.active').index();
+    let tabIndex2 = tabD2.find('.tab-item.swiper-slide-active').index();
+    if (breakpoint.matches === true) {
+      if (onlyMoSwiper !== undefined) {
+        onlyMoSwiper.destroy(true, true);
+        tabD2.find('.tab-item').removeClass('active');
+        tabD2.find('.tab-item').eq(tabIndex2).addClass('active');
+      }
+      return;
+    } else if (breakpoint.matches === false) {
+      enableSwiper();
+      onlyMoSwiper.slideTo(tabIndex1, 1000, false);
+      tabD2.find('.tab-item').removeClass('active');
+    }
+  };
+  const enableSwiper = function () {
+    onlyMoSwiper = new Swiper(selector, {
+      slidesPerView: '1.2',
+      spaceBetween: spaceBetween
+    });
+  };
+  breakpoint.addListener(breakpointChecker);
+  breakpointChecker();
+}
+
+// Sustainability 나눔경영 슬라이드
+function safetySwiper() {
+  var swiperTopNum = $('.slide-display.design-1 .slide-item.case-1').find('.swiper-slide');
+  var swiperSubNum = $('.slide-display.design-1 .slide-item.case-2').find('.swiper-slide');
+  var galleryTop = new Swiper('.slide-item.case-1', {
+    lidesPerView: 1,
+    effect: 'fade',
+    fadeEffect: {
+      crossFade: true
+    },
+    loopedSlides: swiperTopNum.length
+  });
+  var galleryThumbs = new Swiper('.slide-item.case-2', {
+    spaceBetween: 16,
+    slidesPerView: 1,
+    breakpoints: {
+      1024: {
+        spaceBetween: 20
+      }
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev"
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      type: "fraction"
+    },
+    loopedSlides: swiperSubNum.length
+  });
+  galleryTop.controller.control = galleryThumbs;
+  galleryThumbs.controller.control = galleryTop;
+}
+
+// BrandNow 브랜드이미지 상단 슬라이드
+function brandImgSwiper() {
+  var slideNum1 = $('.brandImgSwiper').find('.swiper-slide');
+  var brandImgSlide = new Swiper('.brandImgSwiper .slide-body', {
+    spaceBetween: 20,
+    slidesPerView: 1,
+    centeredSlides: true,
+    loop: true,
+    loopedSlides: slideNum1.length,
+    simulateTouch: false,
+    speed: 600,
+    observer: true,
+    observeParents: true,
+    breakpoints: {
+      1024: {
+        spaceBetween: 155,
+        slidesPerView: 1.3831
+      }
+    },
+    navigation: {
+      nextEl: ".brandImgSwiper .swiper-button-next .button",
+      prevEl: ".brandImgSwiper .swiper-button-prev .button"
+    },
+    pagination: {
+      el: ".brandImgSwiper .swiper-pagination"
+    }
+  });
+}
+
+// BrandNow 브랜드이미지 팝업 슬라이드
+function brandImgPopupSwiper() {
+  var slideNum2 = $('.brandImgPopupSwiper').find('.swiper-slide');
+  var brandImgPopupSlide = new Swiper('.brandImgPopupSwiper .slide-body', {
+    spaceBetween: 20,
+    slidesPerView: 1,
+    centeredSlides: true,
+    loop: true,
+    loopedSlides: slideNum2.length,
+    simulateTouch: false,
+    speed: 600,
+    observer: true,
+    observeParents: true,
+    navigation: {
+      nextEl: ".brandImgPopupSwiper .swiper-button-next .button",
+      prevEl: ".brandImgPopupSwiper .swiper-button-prev .button"
+    },
+    pagination: {
+      el: ".brandImgPopupSwiper .swiper-pagination"
+    }
+  });
+}
+
+// 아코디언
+function tncAccordion() {
+  $(".accordion-display .accordion-button").click(function () {
+    let _this = $(this);
+    let accItem = $('.accordion-item');
+    if (_this.closest(accItem).hasClass('active')) {
+      _this.closest(accItem).removeClass('active');
+    } else {
+      $(".accordion-display .accordion-item").removeClass('active');
+      _this.closest(accItem).addClass("active");
+    }
+  });
+}
+
+// 아코디언 탭 : jw
+function tncAccordionTab() {
+  let container = $('.tab-accordion-display .tab-accordion-body');
+  let ww = parseInt($(window).width());
+  if (ww > 1023) {
+    container.addClass('pc-display');
+  } else {
+    container.addClass('mo-display');
+  }
+  tncAccordionTabReset();
+  $(".tab-accordion-display .tab").click(function () {
+    let _this = $(this);
+    let accItem = $('.accordion-item');
+    let conBox = $('.sub-content-box');
+    let idx = _this.closest('.accordion-item').index();
+    if (_this.closest(accItem).hasClass('active')) {
+      return;
+    } else {
+      accItem.removeClass('active');
+      $('.sub-item').removeClass('active');
+      _this.closest(accItem).addClass("active");
+      accItem.find('.tab-sub-list').slideUp(300);
+      _this.closest(accItem).find('.tab-sub-list').slideDown(300);
+      _this.closest(accItem).find('.sub-item').eq(0).addClass('active');
+      if (container.hasClass('pc-display')) {
+        conBox.fadeOut(300);
+        _this.closest(accItem).find('.sub-item').eq(0).find('.sub-content-box').fadeIn(300);
+      } else {
+        conBox.fadeIn(300);
+      }
+      $('.tab-accordion-inner .bg .bg-item').fadeOut(300);
+      $('.tab-accordion-inner .bg .bg-item').eq(idx).fadeIn(300);
+      $('.btn-open').removeClass('icon-minus01');
+      $('.btn-open').addClass('icon-plus01');
+      _this.closest(accItem).find('.btn-open').addClass('icon-minus01');
+    }
+  });
+}
+function tncAccordionTabList() {
+  $(".tab-sub-list .sub-item .sub-title").click(function () {
+    const ww = parseInt($(window).width());
+    if (ww > 1023) {
+      let _this = $(this);
+      let subItem = $('.sub-item');
+      if (_this.closest(subItem).hasClass('active')) {
+        return;
+      } else {
+        subItem.removeClass('active');
+        _this.closest(subItem).addClass("active");
+        subItem.find('.sub-content-box').fadeOut(300);
+        _this.closest(subItem).find('.sub-content-box').fadeIn(300);
+      }
+    }
+  });
+}
+function tncAccordionTabReset() {
+  const ww = parseInt($(window).width());
+  const container = $('.tab-accordion-body');
+  const accItem = container.find('.accordion-item').eq(0);
+  const subItem = accItem.find('.sub-item').eq(0);
+  container.find('*').removeClass('active');
+  accItem.addClass('active');
+  subItem.addClass('active');
+  if (ww > 1023) {
+    container.find('.tab-sub-list').hide();
+    accItem.find('.tab-sub-list').show();
+    container.find('.sub-content-box').hide();
+    subItem.find('.sub-content-box').show();
+  } else {
+    container.find('.tab-sub-list').hide();
+    accItem.find('.tab-sub-list').show();
+    container.find('.sub-content-box').show();
+    container.find('.btn-open').removeClass('icon-minus01').removeClass('icon-plus01');
+    container.find('.btn-open').addClass('icon-plus01');
+    accItem.find('.btn-open').addClass('icon-minus01');
+  }
+}
+function tncAccordionTab_response() {
+  const ww = parseInt($(window).width());
+  const container = $('.tab-accordion-body');
+  if (ww > 1023) {
+    if (!container.hasClass('pc-display')) {
+      container.removeClass('mo-display');
+      container.addClass('pc-display');
+      tncAccordionTabReset();
+    }
+  } else {
+    if (!container.hasClass('mo-display')) {
+      container.removeClass('pc-display');
+      container.addClass('mo-display');
+      tncAccordionTabReset();
+    }
+  }
+}
+// 아코디언 탭 end
+
+// Popup
+function openPopup(id) {
+  //$(".mask").fadeIn();
+  $("#" + id).addClass('active');
+  $('body').addClass('popup-open');
+}
+function closePopup(id) {
+  //$(".mask").fadeOut();
+  $("#" + id).removeClass('active');
+  $('body').removeClass('popup-open');
+}
+function closePopupDim() {
+  let popup = $(".popup");
+  $(popup).click(function (e) {
+    let _this = $(this);
+    let _thisId = _this.attr('id');
+    if (popup.has(e.target).length === 0) {
+      $("#" + _thisId).removeClass('active');
+      $('body').removeClass('popup-open');
+    }
+  });
+}
+function calcVH() {
+  let vh = window.innerHeight;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  window.addEventListener('resize', () => {
+    let vh = window.innerHeight;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  });
+  window.addEventListener('touchend', () => {
+    let vh = window.innerHeight;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  });
+}
+
+/*
+// 서브 공통 MouseWheel
+function subPageIntroWheel() {
+
+    let move = false;
+
+    $(window).on("wheel DOMMouseScroll", function(e) {
+        if (!move) {
+            move = true;
+            //let curScroll;
+            let win_H = $(window).innerHeight();
+            let win_H_half = parseInt(win_H / 2);
+            let local = $('.contents-section .local');
+            let local_T = local.offset().top;
+            let local_H = local.innerHeight();
+
+            let contentsSection2_T = $('.contents-section.contents-section2').offset().top;
+
+            if (e.originalEvent.wheelDelta < 0 || e.originalEvent.detail > 0) {
+                setTimeout(() => {
+                    curScroll = $(window).scrollTop();
+                    console.log(curScroll)
+
+                    if (curScroll > win_H_half && curScroll < contentsSection2_T ) {
+                        $('body').on('scroll touchmove', function(event) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            return false;
+                        }, { passive: false });
+                        $('html, body').stop().animate({ scrollTop: contentsSection2_T }, 1000,'easeOutCubic',function() {
+                            $('body').off('scroll touchmove');
+                            move = false;
+                        });
+                    } else {
+                        move = false;
+                    }
+                }, 100);
+            } else {
+                setTimeout(() => {
+                    curScroll = $(window).scrollTop();
+                    console.log(curScroll)
+                    if (curScroll < contentsSection2_T && curScroll > win_H_half) {
+                        $('body').on('scroll touchmove', function(event) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            return false;
+                        }, { passive: false });
+                        $('html, body').stop().animate({ scrollTop: win_H_half }, 700,'easeOutCubic', function() {
+                            $('body').off('scroll touchmove');
+                            move = false;
+                        });
+                    } else {
+                        move = false;
+                    }
+                }, 100);
+            }
+        }
+    });
+}
+// 서브 공통 depth3
+function tabDepth3_Move() {
+    let _window = $(window);
+    let _container = $('.container');
+    let tabModule = $('.local-navi.depth3');
+
+    tabModule.each(function(){
+        let _this = $(this);
+        let tabMarginLeft = 0;
+        let leftPosition = 0;
+        let defaultWidth = 0;
+        let tabDisplayWrap = _this.find('.tab-list');
+        let tabLink = _this.find('.tab-item .tab-text');
+
+        var resizeTime1 = setTimeout(function(){
+            for(let i=0; i<tabDisplayWrap.find('.tab-item').length; i++) {
+                if(tabDisplayWrap.find('.tab-item').eq(i).hasClass('current')){
+                    defaultWidth = tabDisplayWrap.find('.tab-item').eq(i).find('.tab-text').innerWidth();
+                    for(let j=0; j<=i; j++) {
+                        if(j > 0){
+                            leftPosition = leftPosition + (tabDisplayWrap.find('.tab-item').eq(j-1).find('.tab-text').innerWidth() + tabMarginLeft);
+                        } else {
+                            leftPosition = 0;
+                        }
+                    }
+                    tabModule.find('.background').addClass('active');
+                }
+            }
+            tabModule.find('.background').css({
+                'width': (defaultWidth * 0.1) + 'rem',
+                'left': (leftPosition * 0.1) + 'rem'
+            });
+        }, 300, function() {
+            clearTimeout(resizeTime1);
+        });
+
+        tabBtn.on('click', function() {
+            e.preventDefault();
+
+            const _bThis = $(this);
+            let tabLayer = _bThis.closest('.tab-display').siblings('.tab-layer').find('.tab-layer-item');
+            _bThis.closest('.tab-display').removeClass('defaultLoad');
+            _bThis.parent().siblings('.tab-item').removeClass('active');
+            _bThis.parent().addClass('active');
+            _bThis.parent().siblings('.tab-bg').addClass('active');
+
+            for(let i=0; i<=_bThis.parent().index(); i++) {
+                if(i > 0){
+                    leftPosition = leftPosition + (_bThis.parent().siblings('.tab-item').eq(i-1).find('.tab-btn').innerWidth() + tabMarginLeft);
+                } else {
+                    leftPosition = 0;
+                }
+            }
+
+            _bThis.parent().siblings('.tab-bg').css({
+                'width': (_bThis.innerWidth() * 0.1) + 'rem',
+                'left': (leftPosition * 0.1) + 'rem'
+            });
+
+            leftPosition = 0;
+            tabLayer.removeClass('active');
+            tabLayer.eq(_bThis.parent().index()).addClass('active');
+        });
+    });
+}
+//3뎁스탭
+function depth3MoveTab() {
+    const tabModuleArea = $('.tab-data');
+    tabModuleArea.each(function(){
+        const _window = $(window);
+        const _this = $(this);
+        const _container = $('.container');
+        let tabMarginLeft = 0;
+        let leftPosition = 0;
+        let tabDisplayWrap = _this.find('.tab-display');
+        let tabBtn = tabDisplayWrap.find('.tab-btn');
+        let tabLayerWrap = _this.find('.tab-layer');
+        let defaultWidth = 0;
+
+        var resizeTime1 = setTimeout(function(){
+            for(let i=0; i<tabDisplayWrap.find('.tab-item').length; i++) {
+                if(tabDisplayWrap.find('.tab-item').eq(i).hasClass('active')){
+                    tabLayerWrap.find('.tab-layer-item').eq(i).addClass('active');
+                    defaultWidth = tabDisplayWrap.find('.tab-item').eq(i).find('.tab-btn').innerWidth();
+                    for(let j=0; j<=i; j++) {
+                        if(j > 0){
+                            leftPosition = leftPosition + (tabDisplayWrap.find('.tab-item').eq(j-1).find('.tab-btn').innerWidth() + tabMarginLeft);
+                        } else {
+                            leftPosition = 0;
+                        }
+                    }
+                    tabDisplayWrap.find('.tab-bg').addClass('active');
+                }
+            }
+            tabDisplayWrap.find('.tab-bg').css({
+                'width': (defaultWidth * 0.1) + 'rem',
+                'left': (leftPosition * 0.1) + 'rem'
+            });
+        },300, function() {
+            clearTimeout(resizeTime1);
+        });
+
+        _window.on('resize', () => {
+            var resizeTime = setTimeout(function(){
+                leftPosition = 0;
+                for(let i=0; i<tabDisplayWrap.find('.tab-item').length; i++) {
+                    if(tabDisplayWrap.find('.tab-item').eq(i).hasClass('active')){
+                        defaultWidth = tabDisplayWrap.find('.tab-item').eq(i).find('.tab-btn').innerWidth();
+                        for(let j=0; j<=i; j++) {
+                            if(j > 0){
+                                leftPosition = leftPosition + (tabDisplayWrap.find('.tab-item').eq(j-1).find('.tab-btn').innerWidth() + tabMarginLeft);
+                            } else {
+                                leftPosition = 0;
+                            }
+                        }
+                        tabDisplayWrap.find('.tab-bg').addClass('active');
+                    }
+                }
+                tabDisplayWrap.find('.tab-bg').css({
+                    'width': (defaultWidth * 0.1) + 'rem',
+                    'left': (leftPosition * 0.1) + 'rem'
+                });
+            },300, function(){
+                clearTimeout(resizeTime);
+            });
+        });
+
+        linkDepth4WrapResponsive();
+        _window.resize(() => {
+            linkDepth4WrapResponsive();
+        });
+
+        tabBtn.on('click', function() {
+            const _bThis = $(this);
+            let tabLayer = _bThis.closest('.tab-display').siblings('.tab-layer').find('.tab-layer-item');
+            _bThis.closest('.tab-display').removeClass('defaultLoad');
+            _bThis.parent().siblings('.tab-item').removeClass('active');
+            _bThis.parent().addClass('active');
+            _bThis.parent().siblings('.tab-bg').addClass('active');
+
+            for(let i=0; i<=_bThis.parent().index(); i++) {
+                if(i > 0){
+                    leftPosition = leftPosition + (_bThis.parent().siblings('.tab-item').eq(i-1).find('.tab-btn').innerWidth() + tabMarginLeft);
+                } else {
+                    leftPosition = 0;
+                }
+            }
+
+            _bThis.parent().siblings('.tab-bg').css({
+                'width': (_bThis.innerWidth() * 0.1) + 'rem',
+                'left': (leftPosition * 0.1) + 'rem'
+            });
+
+            leftPosition = 0;
+            tabLayer.removeClass('active');
+            tabLayer.eq(_bThis.parent().index()).addClass('active');
+        });
+    });
+}
+function linkDepth4WrapResponsive() {
+    const _window = $(window);
+    const _windowWidth = _window.innerWidth();
+    const mobileSize = 1023;
+    const tabModuleArea = $('.tab-data');
+    if(_windowWidth > mobileSize) {
+        tabModuleArea.addClass('pc');
+        tabModuleArea.removeClass('mo');
+        tabModuleArea.find('.link-depth4-choice-link-box').removeClass('active');
+    } else {
+        tabModuleArea.addClass('mo');
+        tabModuleArea.removeClass('pc');
+    }
+}*/

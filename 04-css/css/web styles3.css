@@ -1,0 +1,34 @@
+/* 기본 셋팅 값 : reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: #222;
+    line-height: 1.5;
+    letter-spacing: -0.5px;
+    list-style: none;
+}
+.wrap {
+    display: flex;
+    height: calc(100vh - 100px);
+}
+header {
+    width: 200px;
+    background: #ffe6e6;
+}
+main {
+    width: 400px;
+    background: #e6ffec;
+}
+.slide {
+    width: calc(100% - 200px - 400px);
+    background: #e6e6ff;
+}
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+    background: #fffbf0;
+}

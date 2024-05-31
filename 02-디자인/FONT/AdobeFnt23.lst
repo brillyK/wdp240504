@@ -1,0 +1,255 @@
+%!Adobe-FontList 1.23
+%Locale:0x412
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:CID
+FontName:Pretendard-Black
+FamilyName:Pretendard
+StyleName:Black
+FullName:Pretendard Black
+MenuName:Pretendard Black
+StyleBits:0
+FamilyNameNative:Pretendard
+StyleNameNative:Black
+FullNameNative:Pretendard Black
+WritingScript:Korean
+OutlineFileName:D:\ux,ui\KimGayeong\my\wdp240503\02-디자인\Font\Pretendard-Black.otf
+DataFormat:sfntData
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:1639324
+FileModTime:1716471785
+WeightClass:900
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Pretendard Black
+NameArray:0,Win,1,Pretendard Black
+NameArray:0,Win,16,Pretendard
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:CID
+FontName:Pretendard-Bold
+FamilyName:Pretendard
+StyleName:Bold
+FullName:Pretendard Bold
+MenuName:Pretendard
+StyleBits:2
+FamilyNameNative:Pretendard
+StyleNameNative:Bold
+FullNameNative:Pretendard Bold
+WritingScript:Korean
+OutlineFileName:D:\ux,ui\KimGayeong\my\wdp240503\02-디자인\Font\Pretendard-Bold.otf
+DataFormat:sfntData
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:1655440
+FileModTime:1716471785
+WeightClass:700
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Pretendard Bold
+NameArray:0,Win,1,Pretendard
+NameArray:0,Win,16,Pretendard
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:CID
+FontName:Pretendard-ExtraBold
+FamilyName:Pretendard
+StyleName:ExtraBold
+FullName:Pretendard ExtraBold
+MenuName:Pretendard ExtraBold
+StyleBits:0
+FamilyNameNative:Pretendard
+StyleNameNative:ExtraBold
+FullNameNative:Pretendard ExtraBold
+WritingScript:Korean
+OutlineFileName:D:\ux,ui\KimGayeong\my\wdp240503\02-디자인\Font\Pretendard-ExtraBold.otf
+DataFormat:sfntData
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:1646960
+FileModTime:1716471786
+WeightClass:800
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Pretendard ExtraBold
+NameArray:0,Win,1,Pretendard ExtraBold
+NameArray:0,Win,16,Pretendard
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:CID
+FontName:Pretendard-ExtraLight
+FamilyName:Pretendard
+StyleName:ExtraLight
+FullName:Pretendard ExtraLight
+MenuName:Pretendard ExtraLight
+StyleBits:0
+FamilyNameNative:Pretendard
+StyleNameNative:ExtraLight
+FullNameNative:Pretendard ExtraLight
+WritingScript:Korean
+OutlineFileName:D:\ux,ui\KimGayeong\my\wdp240503\02-디자인\Font\Pretendard-ExtraLight.otf
+DataFormat:sfntData
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:1637932
+FileModTime:1716471786
+WeightClass:200
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Pretendard ExtraLight
+NameArray:0,Win,1,Pretendard ExtraLight
+NameArray:0,Win,16,Pretendard
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:CID
+FontName:Pretendard-Light
+FamilyName:Pretendard
+StyleName:Light
+FullName:Pretendard Light
+MenuName:Pretendard Light
+StyleBits:0
+FamilyNameNative:Pretendard
+StyleNameNative:Light
+FullNameNative:Pretendard Light
+WritingScript:Korean
+OutlineFileName:D:\ux,ui\KimGayeong\my\wdp240503\02-디자인\Font\Pretendard-Light.otf
+DataFormat:sfntData
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:1688784
+FileModTime:1716471786
+WeightClass:300
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Pretendard Light
+NameArray:0,Win,1,Pretendard Light
+NameArray:0,Win,16,Pretendard
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:CID
+FontName:Pretendard-Medium
+FamilyName:Pretendard
+StyleName:Medium
+FullName:Pretendard Medium
+MenuName:Pretendard Medium
+StyleBits:0
+FamilyNameNative:Pretendard
+StyleNameNative:Medium
+FullNameNative:Pretendard Medium
+WritingScript:Korean
+OutlineFileName:D:\ux,ui\KimGayeong\my\wdp240503\02-디자인\Font\Pretendard-Medium.otf
+DataFormat:sfntData
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:1663544
+FileModTime:1716471786
+WeightClass:500
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Pretendard Medium
+NameArray:0,Win,1,Pretendard Medium
+NameArray:0,Win,16,Pretendard
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:CID
+FontName:Pretendard-Regular
+FamilyName:Pretendard
+StyleName:Regular
+FullName:Pretendard Regular
+MenuName:Pretendard
+StyleBits:0
+FamilyNameNative:Pretendard
+StyleNameNative:Regular
+FullNameNative:Pretendard Regular
+WritingScript:Korean
+OutlineFileName:D:\ux,ui\KimGayeong\my\wdp240503\02-디자인\Font\Pretendard-Regular.otf
+DataFormat:sfntData
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:1654020
+FileModTime:1716471786
+WeightClass:400
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Pretendard Regular
+NameArray:0,Win,1,Pretendard
+NameArray:0,Win,16,Pretendard
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:CID
+FontName:Pretendard-SemiBold
+FamilyName:Pretendard
+StyleName:SemiBold
+FullName:Pretendard SemiBold
+MenuName:Pretendard SemiBold
+StyleBits:0
+FamilyNameNative:Pretendard
+StyleNameNative:SemiBold
+FullNameNative:Pretendard SemiBold
+WritingScript:Korean
+OutlineFileName:D:\ux,ui\KimGayeong\my\wdp240503\02-디자인\Font\Pretendard-SemiBold.otf
+DataFormat:sfntData
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:1662020
+FileModTime:1716471786
+WeightClass:600
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Pretendard SemiBold
+NameArray:0,Win,1,Pretendard SemiBold
+NameArray:0,Win,16,Pretendard
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:CID
+FontName:Pretendard-Thin
+FamilyName:Pretendard
+StyleName:Thin
+FullName:Pretendard Thin
+MenuName:Pretendard Thin
+StyleBits:0
+FamilyNameNative:Pretendard
+StyleNameNative:Thin
+FullNameNative:Pretendard Thin
+WritingScript:Korean
+OutlineFileName:D:\ux,ui\KimGayeong\my\wdp240503\02-디자인\Font\Pretendard-Thin.otf
+DataFormat:sfntData
+isCFF:yes
+hasSVG:no
+VariableFontType:NonVariableFont
+FileLength:1580164
+FileModTime:1716471786
+WeightClass:100
+WidthClass:5
+AngleClass:0
+NameArray:0,Mac,4,Pretendard Thin
+NameArray:0,Win,1,Pretendard Thin
+NameArray:0,Win,16,Pretendard
+%EndFont
+

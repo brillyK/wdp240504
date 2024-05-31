@@ -1,0 +1,79 @@
+2024.05.27
+
+<기준은 항상 body:팝업 띄울 때 사용>
+position: fixed;
+top: 0;
+left: 0;
+width: 100%; / right: 0; (둘중 하나쓰면 화면 전체 덮음)
+height: 100%;  / bottom: 0;
+background-color: rgba(0, 0, 0, 0.6);
+
+<팝업창 중심에 맞추기>
+#layerpopup .layer {
+    /* display: flex;
+    justify-content: center
+    align-items: center; */
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    /* margin: -150px 0 0 -250px; */
+    transform: translate(-50%, -50%);
+
+    width: 500px;
+    height: 300px;
+    background-color: #fff;
+
+<팝업 내용 많을 때 스크롤사용>
+#layerpopup .layer p {
+    overflow: auto;
+    flex: 1;
+    max-height: 140px;
+}
+
+<팝업 까만 배경까지 잡아서 none 설정 후 개발자한테 넘기기>
+#layerpopup {
+    display: none;
+
+<모서리 알값주기>
+border-radius: 20px;
+
+<위로 항상 뜨게 제트인덱스_제트인덱스는 포지션이 있어야함>
+header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    z-index: 1000; (헤더는 1000단위가 좋음)
+
+<마우스 오버했을 때는 :hover 넣기>
+header #gnb .depth1 > li > a:hover {
+    color: red;
+    font-weight: bold;
+}
+
+<:hover마우스 오버 시::after이라는 가상공간 만들고 박스 넣어서 띄어주기_안 그럼 2px만큼 들석거림>
+header #gnb .depth1 > li:hover:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: red;
+}
+
+<위에 부모 마우스 오버 시 depth2가 나오도록>
+#gnb .depth1:hover > li .depth2 {
+#gnb .depth1 > li:hover .depth2 {
+    display: block;
+}
+#gnb .depth2 {
+    display: none;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+}

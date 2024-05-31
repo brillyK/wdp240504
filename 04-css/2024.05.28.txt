@@ -1,0 +1,41 @@
+ctrl+f = 검색
+
+<슬라이드 사이트>
+[js 사이트]:화살표가 내부에 있음
+https://swiperjs.com/ 
+
+docs에서 사용법 확인
+Use Swiper from CDN(사용하기 위한 cdn 주소)
+Add Swiper HTML Layout
+
+resources>demos : 예시
+<Infinite loop> : 가장많이 사용(무한 루프)
+<Effect fade> : 이미지 서서히 바뀜
+<Mousewheel control> : 마우스로 넘어감
+<Thumbs gallery> : 하단에 이미지 있음
+<Slides per view> : 사진 여러개 슬라이드
+
+원하는 예시에서 'core' 클릭
+*내 css. 위로 붙여야함
+
+js는 link 밑으로 붙이기
+
+버튼이나 그런건 css에서 바꾸기
+
+[슬릭 css 참고]: 화살표가 밖에 있음
+https://kenwheeler.github.io/slick/
+
+usage에가면 사용법 있음
+
+
+[스플라이드 참고용]: 양쪽에 이미지가 항상 대기타고 있음
+https://splidejs.com/
+
+사용법:oddoddo > codepen에서 사용하기
+
+scrit 안쪽에 있는 걸 떼어서 js로 붙이기
+
+ctrl+x=잘라내기
+
+<script defer src="./js/script.js"></script>
+defer : 하단의 html 코드 먼저 읽고 스크립트 적용

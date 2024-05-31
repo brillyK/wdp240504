@@ -1,0 +1,77 @@
+2024.05.30
+
+lottlefiles: 움직이는 기믹
+[CSS Background Attachment]:배경이 멈춰있고 나머지가 올라감
+.banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    background: url(https://images.unsplash.com/photo-1440288736878-766bd5839edb?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
+        no-repeat 0 0 / cover fixed;
+    /* background-size: cover; */
+    /* background-attachment: fixed; */
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+}
+
+[CSS The !important Rule] : 가장 우선으로 적용됨(막 사용하면 안됨)
+.swiper-slide {
+    width: 600px !important ;
+    margin-right: 0 !important ;
+}
+
+[CSS Rounded Corners] : 보더 각자 주기 가능
+border-radius: 20px 50px 30px 50px;
+
+[CSS Gradients]
+background-image: linear-gradient(to right, red , yellow); (방향)
+background-image: linear-gradient(180deg, red, yellow); (각도)
+background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1)); (투명)
+
+CSS Shadow > shadow : 그림자
+
+[advanced > CSS Text effects] : 글자 끝 점점점으로 나오게하기...
+    display: block;
+    margin: 30px 0 15px;
+    font-size: 20px;
+    font-weight: bold;
+    white-space: nowrap;
+    width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+[advanced > Different Font]: 글꼴 형식
+otf to woff2 검색해서 변환해서 사용(웹용으로 안만들어진 폰트를 사용할 때)
+
+[CSS 2D Transforms]: 움직임
+
+[CSS Transitions]: 움직임 부드럽게
+   .box div {
+                width: 200px;
+                height: 200px;
+                background-color: rgba(255, 19, 255, 0.527);
+                transition: transform 1s;
+            }
+ .t1:hover {
+                transform: translate(50px, -50px);
+            }
+<05-webdesign.html에 있음>
+.slide-intro .swiper-slide .slide-txt {
+    transform: translateY(0);
+    opacity: 0;
+    transition: all 0.5s ease 0.5s;
+}
+.slide-intro .swiper-slide-active .slide-txt {
+    transform: translateY(-50%);
+    opacity: 1;
+}
+
+[css의 변수값 변경하기]
+css 맨 위로가서
+:root {
+    --swiper-theme-color: #ff1e00;
+}
+페이지 이름 그대로 적어줘야함

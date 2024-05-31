@@ -1,0 +1,9 @@
+2024.05.29
+
+가장 첫번쨰 태그 잡고 shift잡고 마지막 태그 잡으면 다 잡힘
+
+  [이미지 박스에 맞추어 자르기_object-fit] object-fit: cover;
+  [이미지 박스 내에서 위치 변경_object-position] object-position: 20% 50%;
+
+[이미지 링크전에 감싸기 마우스 오버 넣으려고 ] <div class="thumb"> </div>
+[날짜] <em>2024.05.27</em>

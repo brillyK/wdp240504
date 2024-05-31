@@ -1,0 +1,46 @@
+<css>
+[over flow오버플로어] : 글이 넘칠 때 사용
+상자 밖으로 글이 넘칠 때
+
+[lorem]: 글 자동으로 채워짐
+
+overflow: hidden; (박스 밖은 안보임)
+overflow: scroll; (아래 오른쪽 스크롤 생김)
+overflow: auto; (외쪽에 글 길때만 생김)
+
+[css position]: 햄버거, 이미지 위에 재생버튼,헤더 고정 등 
+static : 기본값(pc에서 있다가 모바일에서 없애고 싶을때)
+relative : 상대값 가장 많이 사용*
+fixed : 고정
+absolute 가장 많이 사용*
+sticky : 움직이다가 붙음
+
+position: relative; (원래 위치 자리 남기고 본인 위치 지정 가능)
+top: 50px;
+left: 100px;
+
+position: absolute; (기준 박스를 기준으로 위치를 잡음)
+(기준박스에 relative를 넣어주어야함/ 없으면 body가 기준_쓰면안됨)
+top: 50px; or  bottom: 20px;
+left: 50px;  or  right: 20px;
+
+position: fixed; (fixed의 기준은 항상 body>기준 없어도 됨)
+top: 0;
+left: 0;
+
+[z-index]: 높을수록 더 높은 위(헤털ㄹ 위에 올릴때
+z-index: 1; (헤더는 가장위에 있어야해서 1000; 사용/ 컨텐츠는 1~100; 사용)
+
+[sticky]
+ z-index: 100;
+position: sticky;
+top: 50px;
+left: 0;
+
+[margin]_이전 버전
+margin: -50px 0 0 -50px;
+
+[2d transforms]
+translate: 위치 변환 (x,y)
+transform: translate(-50px, -50px);
+transform: translate(-50%, -50%);

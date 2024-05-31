@@ -1,0 +1,668 @@
+// 마우스 커서 모양 변경
+const customCursor = document.querySelector('.custom-cursor');
+
+document.addEventListener('mousemove', (e) => {
+	customCursor.style.left = e.clientX + 'px';
+	customCursor.style.top = e.clientY + 'px';
+});
+
+// 마우스 호버시 커서 모양 변경
+const hoverCursor = document.querySelector('.hover_cursor');
+const hoverWrs = document.querySelectorAll('.hover_cursor_wr');
+
+let mouseX = 0;
+let mouseY = 0;
+let cursorX = 0;
+let cursorY = 0;
+let cursorSpeed = 0.2;
+
+function animate() {
+	let distX = mouseX - cursorX;
+	let distY = mouseY - cursorY;
+	cursorX += distX * cursorSpeed;
+	cursorY += distY * cursorSpeed;
+
+	if (hoverCursor !== null) {
+		hoverCursor.style.left = cursorX + 'px';
+		hoverCursor.style.top = cursorY + 'px';
+	}
+
+	requestAnimationFrame(animate);
+}
+animate();
+
+function handleMouseMove(e) {
+	if (window.innerWidth > 767) {
+		mouseX = e.clientX;
+		mouseY = e.clientY;
+		customCursor.classList.add('active');
+
+		if (this.classList.contains('click')) {
+			customCursor.classList.add('on');
+		} else {
+			customCursor.classList.remove('on');
+		}
+	}
+}
+
+function handleMouseLeave() {
+	if (window.innerWidth > 767) {
+		customCursor.classList.remove('active', 'on');
+	}
+}
+
+for (let hoverWr of hoverWrs) {
+	hoverWr.addEventListener('mousemove', handleMouseMove);
+	hoverWr.addEventListener('mouseleave', handleMouseLeave);
+}
+
+window.addEventListener('resize', () => {
+	if (window.innerWidth <= 767) {
+		customCursor.classList.remove('active', 'on');
+	}
+});
+
+// Swiper loop 복제된 슬라이드에도 마우스 커서 효과 넣어주기
+function swiperCursorAdd() {
+	const newHoverWrs = document.querySelectorAll('.hover_cursor_wr');
+
+	for (let hoverWr of newHoverWrs) {
+		hoverWr.addEventListener('mousemove', handleMouseMove);
+		hoverWr.addEventListener('mouseleave', handleMouseLeave);
+	}
+}
+
+// tab menu common
+const tabContainers = document.querySelectorAll('.tab_container');
+
+tabContainers.forEach((container) => {
+	const tabItems = container.querySelectorAll('.tab_item');
+	const tabInners = container.querySelectorAll('.tab_inner');
+
+	tabItems.forEach((tab, idx) => {
+		tab.addEventListener('click', function () {
+			tabInners.forEach((inner) => {
+				inner.classList.remove('active');
+			});
+
+			tabItems.forEach((item) => {
+				item.classList.remove('active');
+			});
+
+			tabItems[idx].classList.add('active');
+			tabInners[idx].classList.add('active');
+		});
+	});
+
+	tabItems.forEach((item) => {
+		item.addEventListener('click', function (e) {
+			e.preventDefault();
+		});
+	});
+});
+
+// 스크롤 header 고정
+const header = document.querySelector('#header');
+const windowWith = window.innerWidth;
+const mobileSize = 989;
+let prevScroll = 0;
+const slateTabMenu = document.querySelector('.slate .top_cont');
+
+window.addEventListener('scroll', function () {
+	let scroll = window.pageYOffset || 0;
+
+	if (!gnbBtnMo.classList.contains('on')) {
+		if (scroll > prevScroll) {
+			header.classList.add('is_Hidden');
+			if (slateTabMenu) {
+				slateTabMenu.classList.remove('on');
+			}
+		} else if (scroll < prevScroll) {
+			header.classList.remove('is_Hidden');
+			if (slateTabMenu) {
+				slateTabMenu.classList.add('on');
+			}
+		}
+
+		if (scroll === 0) {
+			header.classList.add('is_top');
+			header.classList.remove('is_Hidden');
+		} else {
+			header.classList.remove('is_top');
+		}
+	}
+
+	prevScroll = scroll;
+	setProgress(scroll);
+});
+
+// header메뉴 활성화
+const pathParts = window.location.pathname.split('/');
+const currentURLText = pathParts[pathParts.length - 1];
+
+const menuItems = [
+	{
+		selector: '.main_menu .company.depth_1 > a',
+		values: ['company', 'slate', 'partners'],
+	},
+	{
+		selector: '.main_menu .format.depth_1 > a',
+		values: ['format', '4dx', 'screenx', 'ultra4dx'],
+	},
+	{
+		selector: '.main_menu .content_menu.depth_1 > a',
+		values: ['hollywood', 'alternative', 'alternative_detail', 'production'],
+	},
+	{
+		selector: '.main_menu .news.depth_1 > a',
+		values: ['news', 'news_detail'],
+	},
+	{
+		selector: '.main_menu .contact.depth_1 > a',
+		values: ['contact', 'careers'],
+	},
+];
+
+for (const menuItem of menuItems) {
+	headerMenuActive(menuItem.selector, menuItem.values);
+}
+
+function headerMenuActive(selector, values) {
+	if (values.includes(currentURLText)) {
+		const link = document.querySelector(selector);
+		if (link) {
+			link.classList.add('on');
+		}
+	}
+}
+
+// 스크롤 위치 값에 따른 sub 박스 항목 텍스트 위치 변경
+const content = document.querySelector('.content');
+const sub = document.querySelector('.sub');
+const pageTitCont = document.querySelector('.page_tit_cont');
+
+function setProgress(scroll) {
+	if (sub && pageTitCont) {
+		const contentRect = content.getBoundingClientRect();
+		const contentPos = contentRect.top + scroll;
+		const progress = Math.min(1.5, scroll / contentPos);
+		pageTitCont.style.setProperty('--progress', progress);
+	}
+}
+
+// footer 클릭시 option 값 노출
+const familySites = document.querySelectorAll('#footer .family_site_cont_desc');
+const familySiteSelectBoxes = document.querySelectorAll('#footer .family_site_cont_desc .select_box');
+const familySiteDropBox = document.querySelectorAll('#footer .family_site_cont_desc .drop_down_btn');
+
+familySites.forEach(function (familySite, index) {
+	const familySiteSelectBox = familySiteSelectBoxes[index];
+	familySiteSelectBox.classList.add('dn');
+	familySite.classList.remove('on');
+
+	familySite.addEventListener('click', function () {
+		familySiteSelectBox.classList.toggle('dn');
+		familySite.classList.toggle('on');
+	});
+});
+
+// footer sns 클릭시 option 값 노출
+const snsListDesc = document.querySelectorAll('.sns_cont_desc .sns_list');
+for (let i = 0; i < snsListDesc.length; i++) {
+	const snsBox = snsListDesc[i].querySelector('.select_box');
+
+	if (snsBox) {
+		const accout = snsListDesc[i].querySelectorAll('.select_box .account');
+		const snsBoxImg = snsListDesc[i].querySelector('img');
+
+		snsBox.classList.add('dn');
+		snsBoxImg.classList.remove('on');
+
+		snsListDesc[i].addEventListener('click', function (e) {
+			snsBox.classList.toggle('dn');
+			snsBoxImg.classList.toggle('on');
+		});
+
+		// sns 계정이 5개 이상일 때 height 값 변경
+		if (accout.length >= 5) {
+			snsBox.classList.add('on');
+		}
+	}
+}
+
+// a 링크 클릭시 맨위 이동 방지
+const eventPrevent = document.querySelectorAll('.e_pd');
+
+eventPrevent.forEach((el) => {
+	el.addEventListener('click', function (e) {
+		e.preventDefault();
+	});
+});
+
+// 외부영역 클릭시 팝업창 닫기
+const snsBoxs = document.querySelectorAll('.sns_cont_desc .sns_list .select_box');
+const snsBoxImg = document.querySelectorAll('.sns_cont_desc .sns_list a img');
+
+window.addEventListener('click', (e) => {
+	// 패밀리 사이트
+	familySiteSelectBoxes.forEach((familySite) => {
+		const target = e.target.parentNode.nextElementSibling;
+		if (target !== familySite) {
+			familySite.classList.add('dn');
+		}
+	});
+
+	// sns 사이트
+	snsBoxs.forEach((modal) => {
+		const snsBoxImg = modal.parentNode.querySelector('img');
+		const target = e.target.parentNode.nextElementSibling;
+		if (target !== modal) {
+			modal.classList.add('dn');
+			snsBoxImg.classList.remove('on');
+		}
+	});
+});
+
+// header 클릭시 국문/영문 변경
+const headerLang = document.querySelectorAll('#header .lang_menu .lang');
+
+for (let i = 0; i < headerLang.length; i++) {
+	headerLang[i].addEventListener('click', function () {
+		for (let j = 0; j < headerLang.length; j++) {
+			headerLang[j].classList.remove('active');
+		}
+
+		headerLang[i].classList.add('active');
+	});
+}
+
+// learn more svg 버튼 공통 효과
+const learnMoreBtn = document.querySelectorAll('.btn_learn_more_svg');
+
+if (windowWith >= mobileSize) {
+	function btnMotion() {
+		learnMoreBtn.forEach((btn) => {
+			let timeoutId;
+
+			btn.addEventListener('mouseenter', function () {
+				btn.classList.add('active');
+
+				timeoutId = setTimeout(function () {
+					if (btn.classList.contains('active')) {
+						// .send 클래스가 있는 경우, 'bg_change' 클래스 추가
+						// 그렇지 않으면 'active' 클래스 추가
+						const classToAdd = btn.classList.contains('send') ? 'bg_change' : 'active';
+						btn.querySelector('.txt_cont').classList.add(classToAdd);
+					}
+				}, 650);
+			});
+
+			btn.addEventListener('mouseleave', function () {
+				clearTimeout(timeoutId); // 마우스가 timeout보다 빨리 떠났을 때 타이머 취소
+				btn.classList.remove('active');
+				// 'active'와 'bg_change' 클래스 모두 제거
+				btn.querySelector('.txt_cont').classList.remove('active', 'bg_change');
+			});
+		});
+	}
+}
+
+window.addEventListener('resize', btnMotion);
+window.addEventListener('load', btnMotion);
+
+// send 박스 svg 공통 효과
+const sendBtn = document.querySelectorAll('.send_btn button');
+
+sendBtn.forEach((btn) => {
+	btn.addEventListener('mouseenter', function () {
+		btn.classList.add('active');
+
+		timeoutId = setTimeout(function () {
+			if (btn.classList.contains('active')) {
+				btn.querySelector('.txt_cont').classList.add('active');
+			}
+		}, 650);
+	});
+
+	btn.addEventListener('mouseleave', function () {
+		clearTimeout(timeoutId); // 마우스가 settimoout보다 빨리 떠났을 때 타이머 취소
+		btn.classList.remove('active');
+		btn.querySelector('.txt_cont').classList.remove('active');
+	});
+});
+
+// 접속 기기별 클래스 추가
+const filter = 'win16|win32|win64|mac|macintel';
+const platform = navigator.platform.toLowerCase();
+
+if (filter.split('|').some((filterValue) => platform.includes(filterValue))) {
+	// PC로 접속한 경우
+	// document.body.classList.add("pc_ver");
+	// console.log(navigator.platform + " PC 접속");
+} else {
+	// 모바일로 접속한 경우
+	document.body.classList.add('mo_ver');
+	// console.log(navigator.platform + " 모바일 접속");
+}
+
+// 아이폰SE 사이즈보다 작을 경우
+function mobileHeightCheck() {
+	const windowHeight = window.innerHeight;
+
+	if (windowHeight <= 667) {
+		document.body.classList.add('mo_short_ver');
+	} else {
+		document.body.classList.remove('mo_short_ver');
+	}
+}
+
+window.addEventListener('resize', mobileHeightCheck);
+mobileHeightCheck();
+
+// 노트북 사이즈
+function laptopHeightCheck() {
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth; 
+
+    if (windowHeight <= 800 && windowWidth > 1024) {
+        document.body.classList.add('lap_top_ver');
+    } else {
+        document.body.classList.remove('lap_top_ver');
+    }
+}
+
+window.addEventListener('resize', laptopHeightCheck);
+laptopHeightCheck();
+
+
+window.addEventListener('resize', laptopHeightCheck);
+laptopHeightCheck();
+
+// 공통 텍스트 애니메이션
+const currentPath = window.location.pathname + window.location.search;
+
+function textAni(container = document) {
+    const mainCols = container.querySelectorAll('.col');
+
+    mainCols.forEach((col) => col.classList.remove('on'));
+    mainCols.forEach((col, index) => {
+        // 부모 요소가 'txt_box' 클래스를 가지고 있는지 확인
+        let delay = col.parentElement.classList.contains('txt_box') ? 0 : 500;
+
+        setTimeout(() => {
+            col.classList.add('on');
+        }, delay + (index + 1) * 150);
+    });
+}
+
+// 모바일 버전 텍스트 애니메이션
+if (windowWith <= 767) {
+	function textAniMo(sectionClass) {
+		const txtBoxes = document.querySelectorAll(`.${sectionClass} .mo_ver.img_cont .txt_box`);
+
+		txtBoxes.forEach((txtBox) => {
+			const colElements = txtBox.querySelectorAll('.col');
+			const delay = 200; // 0.2초 딜레이
+
+			colElements.forEach((col, index) => {
+				if (index === 0) {
+					col.classList.add('on');
+				} else {
+					setTimeout(() => {
+						col.classList.add('on');
+					}, (index - 1) * delay);
+				}
+			});
+		});
+	}
+}
+
+if (currentPath !== '/' &&  currentPath !== '/?company' && currentPath != '/4dx' && currentPath != '/screenx' && currentPath != '/ultra4dx') {
+	// 해당 페이지가 아닐 경우 바로 텍스트 애니메이션 실행
+	document.addEventListener('DOMContentLoaded', function() {
+		textAni();
+	});
+}
+
+const mainPageTitle = document.querySelectorAll('.col .txt_desc');
+mainPageTitle.forEach(function (element) {
+	const text = element.textContent;
+	element.setAttribute('data-w', text);
+	element.innerHTML = '';
+
+	for (let i = 0; i < text.length; i++) {
+		const char = text[i];
+		const charDiv = document.createElement('div');
+		charDiv.classList.add('letter', 'trans');
+
+		const isSubTxt = element.classList.contains('sub_txt');
+		const delayInMilliseconds = isSubTxt ? 0 : i * 25; // transition-delay 값을 계산
+		// charDiv.style.transitionDelay = delayInMilliseconds + "ms";
+
+		const charSpan = document.createElement('span');
+		charSpan.textContent = char;
+		charSpan.setAttribute('data-a', char === ' ' ? 'empty' : char);
+		charSpan.classList.add('letter_desc', 'trans');
+		charSpan.style.transitionDelay = isSubTxt ? '0ms' : delayInMilliseconds + 'ms';
+
+		charDiv.appendChild(charSpan);
+		element.appendChild(charDiv);
+	}
+});
+
+// 메인 슬라이드
+let pageTitles;
+let currentIndex = 0;
+
+function updatePageTitles() {
+	if (window.innerWidth >= 989) {
+		pageTitles = document.querySelectorAll('.pc_ver_989 .page_title');
+	} else {
+		pageTitles = document.querySelectorAll('.mo_ver_989 .page_title');
+		if (currentPath === '/4dx' || currentPath === '/screenx' || currentPath === '/ultra4dx') {
+			pageTitles = document.querySelectorAll('.pc_ver_989 .page_title');
+		}
+	}
+	currentIndex = 0;
+	updateVisibility();
+}
+
+function updateVisibility() {
+	pageTitles.forEach((title, index) => {
+		if (currentIndex === index) {
+			title.classList.add('visible');
+			textAni(title); // 현재 visible인 title에 대해서만 textAni 실행
+		} else {
+			title.classList.remove('visible');
+			removeOnClass(title); // visible이 아닌 title의 모든 col에서 on 클래스 제거
+		}
+	});
+	currentIndex = (currentIndex + 1) % pageTitles.length;
+}
+
+function removeOnClass(container) {
+	const cols = container.querySelectorAll('.col');
+	cols.forEach((col) => col.classList.remove('on'));
+}
+
+// window.addEventListener('resize', updatePageTitles);
+
+if (currentPath !== '/') {
+	if (currentPath === '/4dx' || currentPath === '/screenx' || currentPath === '/ultra4dx') {
+		updatePageTitles();
+		setTimeout(() => {
+			updateVisibility();
+			document.querySelector('.format_4dx_page>.container .f_sec.n1 .img_box').classList.add('active');
+		}, 3000);
+	} else {
+		updatePageTitles();
+		setInterval(updateVisibility, 5000);
+	}
+}
+
+// header 인터렉션
+const gnb = document.getElementById('gnb');
+const gnbItems = document.querySelectorAll('#gnb .main_menu > li');
+const subMenus = document.querySelectorAll('#gnb .main_menu .sub_menu');
+
+let isGnbHovered = false;
+let isHeaderHovered = false;
+
+function setGnbOn() {
+	gnb.classList.add('on');
+	isGnbHovered = true;
+}
+
+function setGnbOff() {
+	isGnbHovered = false;
+	if (!isHeaderHovered) {
+		gnb.classList.remove('on');
+		removeAllLiOnClasses();
+	}
+}
+
+function setHeaderOn() {
+	header.classList.add('on');
+	if (isGnbHovered) {
+		gnb.classList.add('on');
+	}
+}
+
+function setHeaderOff() {
+	header.classList.remove('on');
+	if (!isGnbHovered) {
+		gnb.classList.remove('on');
+		removeAllLiOnClasses();
+	}
+}
+
+function handleLiMouseEnter(item) {
+	if (item.querySelector('.sub_menu')) {
+		gnbItems.forEach((item) => item.classList.remove('on'));
+		item.classList.add('on');
+	}
+}
+
+function handleSubMenuMouseEnter(subMenu) {
+	const parentLi = subMenu.closest('li');
+	if (parentLi) {
+		parentLi.classList.add('on');
+	}
+}
+
+function removeAllLiOnClasses() {
+	gnbItems.forEach((item) => item.classList.remove('on'));
+}
+
+// pc버전에서만 동작하기
+if (windowWith >= mobileSize) {
+	gnb.addEventListener('mouseenter', setGnbOn);
+	gnb.addEventListener('mouseleave', setGnbOff);
+
+	header.addEventListener('mouseenter', setHeaderOn);
+	header.addEventListener('mouseleave', setHeaderOff);
+
+	gnbItems.forEach((item) => {
+		item.addEventListener('mouseenter', () => {
+			handleLiMouseEnter(item);
+		});
+	});
+
+	subMenus.forEach((subMenu) => {
+		subMenu.addEventListener('mouseenter', () => {
+			handleSubMenuMouseEnter(subMenu);
+		});
+	});
+}
+
+header.addEventListener('mouseleave', () => {
+	const hasSubMenus = Array.from(gnbItems).some((item) => item.querySelector('.sub_menu'));
+	if (!hasSubMenus) {
+		setGnbOff();
+		setHeaderOff();
+	}
+});
+
+// 모바일 햄버거 메뉴
+const gnbBtnMo = document.querySelector('.btn_call');
+const menuMo = document.querySelector('.menu_mo');
+
+gnbBtnMo.onclick = function () {
+	gnbBtnMo.classList.toggle('on');
+	menuMo.classList.toggle('on');
+
+	if (menuMo.classList.contains('on')) {
+		header.classList.remove('is_Hidden');
+	}
+};
+
+// window.onresize = function () {
+//     // const wid = window.innerWidth;
+
+//     // if (wid >= mobileSize) {
+//     //     menuMo.classList.remove("on");
+//     // }
+// };
+
+const gnbMo = document.querySelector('.menu_mo .gnb_mo');
+const menuMoLi = document.querySelectorAll('.menu_mo .gnb_mo>li>a');
+
+for (let i = 0; i < menuMoLi.length; i++) {
+	menuMoLi[i].addEventListener('click', function (e) {
+		// 서브 메뉴가 있는 경우 링크 이동 방지
+		if (this.nextElementSibling && this.nextElementSibling.classList.contains('sub_menu')) {
+			e.preventDefault();
+		}
+
+		// 클릭된 요소에만 'on' 클래스 토글
+		this.classList.toggle('on');
+
+		// 클릭된 요소의 서브메뉴 처리
+		let subMenuH = this.nextElementSibling;
+		if (subMenuH.style.maxHeight) {
+			subMenuH.style.maxHeight = null;
+			subMenuH.classList.remove('on');
+		} else {
+			subMenuH.style.maxHeight = subMenuH.scrollHeight + 'px';
+			subMenuH.classList.add('on');
+		}
+
+		// 다른 모든 menuMoLi 요소들에서 'on' 클래스 제거
+		menuMoLi.forEach((item) => {
+			if (item !== this) {
+				item.classList.remove('on');
+			}
+		});
+
+		// 다른 모든 서브메뉴에서 maxHeight와 'on' 클래스 제거
+		menuMoLi.forEach((item) => {
+			let otherSubMenu = item.nextElementSibling;
+			if (otherSubMenu && otherSubMenu !== subMenuH) {
+				otherSubMenu.style.maxHeight = null;
+				otherSubMenu.classList.remove('on');
+			}
+		});
+
+		// gnb 메뉴 a태그 중에서 1개라도 클래스명 on이 있으면 true, 아니면 false
+		let hasOnClass = Array.from(menuMoLi).some((item) => item.classList.contains('on'));
+
+		if (hasOnClass) {
+			gnbMo.classList.add('on');
+		} else {
+			gnbMo.classList.remove('on');
+		}
+	});
+}
+
+// 사파리 100vh 오류 해결하기
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+window.addEventListener('resize', () => {
+	let vh = window.innerHeight * 0.01;
+	document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+window.addEventListener('touchend', () => {
+	let vh = window.innerHeight * 0.01;
+	document.documentElement.style.setProperty('--vh', `${vh}px`);
+});

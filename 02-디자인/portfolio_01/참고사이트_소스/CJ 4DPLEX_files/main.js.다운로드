@@ -1,0 +1,810 @@
+// 인트로
+const loaderText = document.querySelectorAll(".intro_loader_inner .loader");
+const container = document.querySelector(".container");
+const introWrap = document.querySelector(".intro_wrap");
+
+// 메인 인트로 인터렉션
+window.addEventListener("load", function () {
+    sec01VidPlay();
+    const introPlayed = sessionStorage.getItem("introPlayed");
+    if (!introPlayed) { // 초기 페이지 인입시 노출(세션스토리지 값이 없는 경우)
+        introWrap.style.opacity = 1;
+        introAni(); // 인트로 애니메이션 실행
+        sec01VidPlay(); // 메인 비디오 재생
+        sessionStorage.setItem("introPlayed", "true");
+    }else {  // 세션스토리지 값이 있는 경우 미노출
+        introWrap.style.opacity = 0;
+        updatePageTitles();
+        setInterval(updateVisibility, 5000); // 텍스트가 5초마다 변경
+    }
+});
+
+// 인트로 애니메이션
+function introAni() {
+    const animationDuration = 1000; 
+    const animationDelay = 1000; 
+
+    loaderText.forEach((text, index) => {
+        setTimeout(() => {
+            text.classList.add("on");
+            loaderText.forEach((otherText, otherIndex) => {
+                if (otherIndex !== index) {
+                    otherText.classList.remove("on");
+                }
+            });
+
+            if (index === loaderText.length - 1) {
+                setTimeout(() => {
+                    introWrap.classList.add("first_loaded");
+                    container.classList.add("on");
+                    updatePageTitles();
+                    setInterval(updateVisibility, 5000);
+                    // sec01VidPlay();
+                    // var player = new Vimeo.Player($(".sec01 .vid")[0]);
+                    // player.play();
+                }, animationDuration);
+            }
+        }, index * (animationDuration + animationDelay));
+    });
+
+    const mainBgImg = document.querySelector(".main_bg");
+    mainBgImg.classList.add("on");
+}
+
+
+const headerCompany = document.querySelector("#header #gnb .main_menu a.company");
+const headerCompanyMo = document.querySelector(".menu_mo .gnb_mo .depth_1 a.company");
+const headerLogo = document.querySelector("#header .logo a");
+
+headerCompany.addEventListener("click", function(){
+    sec01VidPlay();
+});
+headerCompanyMo.addEventListener("click", function(){
+    sec01VidPlay();
+});
+headerLogo.addEventListener("click", function(){
+    sec01VidPlay();
+});
+
+
+// 페이지네이션 마우스 호버시 커서 사라지게 하기
+// const cursor = document.querySelector(".custom-cursor");
+
+// const links = document.querySelectorAll(".progress_cont .progress_title a");
+// links.forEach(link => {
+//     link.addEventListener("mouseover", function() {
+//         cursor.style.display = "none"
+//     });
+
+//     link.addEventListener("mouseout", function() {
+//         cursor.style.display = "block"
+//     });
+// });
+
+// document.querySelector(".sec01").onclick = function(e){
+//     e.preventDefault();
+// }
+
+// 섹션별 offset_top 값 구하기(확인용)
+const sections = document.querySelectorAll(".section");
+const sectionPosList = [];
+
+sections.forEach((el, index) => {
+    const rect = el.getBoundingClientRect();
+    const sectionPos = rect.top + window.scrollY;
+    sectionPosList.push(parseInt(sectionPos));
+});
+
+// 비메오 동영상 노출 되어도 풀페이지 슬라이드 가능하게 만들기
+// document.querySelector('.play_vid').addEventListener('click', function() {
+//     if (this.classList.contains("on")) {
+//         this.classList.remove("on");
+//         document.querySelector(".vid_cont .vid").contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*');
+//     } else {
+//         this.classList.add("on");
+//         document.querySelector(".vid_cont .vid").contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');
+//     }
+// });
+
+// 비디오 컨텐츠 반응형(100vh에 맞추기)
+function videoSize() {
+    var $windowHeight = $(window).height();
+    var $videoHeight = $(".sec10 .vid_cont .vid_box").outerHeight();
+        var $scale = $windowHeight / $videoHeight;
+    
+    if ($videoHeight <= $windowHeight) {
+        $(".sec10 .vid_cont .vid_box").css({
+            "transform" : "scale("+$scale+") translateY(-50%)"
+        });
+    };
+}
+
+$(window).on('load resize',function(){
+    videoSize();
+});
+
+// main에서 실제 footer 삭제
+document.querySelectorAll('footer').forEach(footer => {
+    if (!footer.closest('section')) {
+        footer.remove(); 
+    }
+});
+
+function sec01VidPlay() {
+    var player = new Vimeo.Player($(".sec01 .vid")[0]);
+    player.on('loaded', function() {
+        player.play();
+    });
+}
+
+let isTextAniPage3 = false;
+let isTextAniPage4 = false;
+let isTextAniPage5 = false;
+let isTextAniPage6 = false;
+let isTextAniPage7 = false;
+
+$(document).ready(function () {
+    // main class
+    $("body").addClass("body-main");
+
+    var anchors = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"];
+
+    function fullpageMoSizeMotion() {
+        var windowSize = $(window).width();
+
+        // 모바일 사이즈에서는 Business, Records 섹션 삭제하기
+        if (windowSize <= 767) {
+            $('.sec09, .sec11').remove();
+            // 앵커 업데이트, 모바일에서는 index 9(Business), 11(Records) 제외하기
+            anchors = anchors.filter(anchor => anchor !== "9" && anchor !== "11");
+        }
+    }
+
+    fullpageMoSizeMotion();
+    $(window).resize(fullpageMoSizeMotion);
+
+    // fullpage 플러그인
+    $(".container").fullpage({
+        anchors: anchors, // pc, mo 다르게 설정
+        navigation: false,
+        showActiveTooltip: false,
+        navigationPosition: "right",
+        autoScrolling: true,
+        scrollHorizontally: true,
+        // responsiveWidth: 768,
+        // scrollOverflow: true,
+        // scrollBar: true,
+        afterLoad: function (anchors, index) {
+            // main
+            if (index == 1) {
+                // 메인 배경 비디오 재생
+                var player = new Vimeo.Player($(".sec01 .vid")[0]);
+                player.play();
+            }
+            
+            // slogan
+            if (index == 2) {
+                $(".sec02 .txt_box").addClass("on");
+                $(".sec02 .circle_box").addClass("on");
+            }
+
+            // Screen X
+            if (index == 3 && !isTextAniPage3) {
+                if ($(window).width() < 768) {
+                    textAni($(".sec04").get(0)); 
+                    isTextAniPage3 = true; 
+                    // textAni 텍스트 모션 1번만 실행하게 하기
+                }
+                var player = new Vimeo.Player($(".sec04 .vid")[0]);
+            
+                player.ready().then(function() { 
+                    player.getDuration().then(function(duration) {                
+                        player.on('timeupdate', function (data) {
+                            // if(data.seconds >= 0) {
+                                //     $(".sec04 .dimmed").removeClass("bg_black");
+                                // }
+                            // 1.7초가 넘어가면 텍스트 삭제하기
+                            if (data.seconds >= 0.25) {
+                                $(".sec04 .txt_desc_box").removeClass("on");
+                            }
+                            // 동영상이 끝나면 딤처리 
+                            if (data.seconds >= duration * 0.85) {
+                                $(".sec04 .dimmed").addClass("on");
+                                $(".sec04 .link_box").addClass("on");
+                            }
+                        });
+                    }).catch(function(error) {
+                        console.error(error);
+                    });
+                });
+            
+                // 비디오 재생 시작
+                player.play();
+            }
+            
+            // 4DX
+            if (index == 4  && !isTextAniPage4) {
+                if ($(window).width() < 768) {
+                    textAni($(".sec03").get(0)); 
+                    isTextAniPage4 = true; 
+                }
+                var player = new Vimeo.Player($(".sec03 .vid")[0]);
+            
+                player.ready().then(function() { 
+                    player.getDuration().then(function(duration) {                   
+                        player.on('timeupdate', function (data) {
+                            // if(data.seconds >= 0) {
+                            //     $(".sec03 .dimmed").removeClass("bg_black");
+                            // }
+                            if (data.seconds >= 0.2) {
+                                $(".sec03 .txt_desc_box").removeClass("on");
+                            }
+                            if (data.seconds >= duration * 0.95) {
+                                $(".sec03 .dimmed").addClass("on");
+                                $(".sec03 .link_box").addClass("on");
+                            }
+                        });
+                    }).catch(function(error) {
+                        console.error(error);
+                    });
+                });
+            
+                // 비디오 재생 시작
+                player.play();
+            }
+
+            // ULTRA 4DX
+            if (index == 5) {
+                if ($(window).width() < 768 && !isTextAniPage5) {
+                    textAni($(".sec05").get(0)); 
+                    isTextAniPage5 = true; 
+                }
+                var player = new Vimeo.Player($(".sec05 .vid")[0]);
+            
+                player.ready().then(function() { 
+                    player.getDuration().then(function(duration) {                   
+                        player.on('timeupdate', function (data) {
+                            // if(data.seconds >= 0) {
+                            //     $(".sec05 .dimmed").removeClass("bg_black");
+                            // }
+                            if (data.seconds >= 0.6) {
+                                $(".sec05 .txt_desc_box").removeClass("on");
+                            }
+                            if (data.seconds >= duration * 0.95) {
+                                $(".sec05 .dimmed").addClass("on");
+                                $(".sec05 .link_box").addClass("on");
+                            }
+                        });
+                    }).catch(function(error) {
+                        console.error(error);
+                    });
+                });
+            
+                // 비디오 재생 시작
+                player.play();
+            }
+
+            // Captivating Content
+            if (index == 6 && !isTextAniPage6) {
+                if ($(window).width() < 768) {
+                    textAni($(".sec06").get(0)); 
+                    isTextAniPage6 = true; 
+                }
+                var player = new Vimeo.Player($(".sec06 .vid")[0]);
+            
+                player.ready().then(function() { 
+                    player.getDuration().then(function(duration) {                    
+                        player.on('timeupdate', function (data) {
+                            // if(data.seconds >= 0) {
+                            //     $(".sec06 .dimmed").removeClass("bg_black");
+                            // }
+                            // if (data.seconds >= 2.5) {
+                                // $(".sec06 .txt_desc_box_first").addClass("on");
+                            // }
+                            if (data.seconds >= duration) {
+                                $(".sec06 .pc_ver .dimmed").addClass("on");
+                                $(".sec06 .pc_ver .txt_desc_box").addClass("on");
+                                $(".sec06 .pc_ver .page_title").removeClass("on");
+                                $(".sec06 .pc_ver .page_desc").removeClass("on");
+                                $(".sec06 .pc_ver .btn_learn_more_svg").removeClass("on");
+                            }
+                        });
+                    }).catch(function(error) {
+                        console.error(error);
+                    });
+                });
+                // 비디오 재생 시작
+                player.play();
+            }
+
+            // Alternative Content
+            if(index == 7 && !isTextAniPage7) {
+                if ($(window).width() < 768) {
+                    textAni($(".sec07").get(0)); 
+                    isTextAniPage7 = true; 
+                }
+                var player = new Vimeo.Player($(".sec07 .vid")[0]);
+
+                player.ready().then(function() { 
+                    player.getDuration().then(function(duration) {                     
+                        player.on('timeupdate', function (data) {
+                            // if(data.seconds >= 0) {
+                            //     $(".sec07 .dimmed").removeClass("bg_black");
+                            // }
+                            if (data.seconds >= duration * 0.9) {
+                                $(".sec07 .pc_ver .dimmed").addClass("on");
+                                $(".sec07 .pc_ver .page_title").removeClass("on");
+                                $(".sec07 .pc_ver .page_desc").removeClass("on");
+                                $(".sec07 .pc_ver .btn_learn_more_svg").removeClass("on");
+                            }
+                        });
+                    }).catch(function(error) {
+                        console.error(error);
+                    });
+                });
+
+                // 비디오 재생 시작
+                player.play();
+            }
+
+            // slate
+            if (index == 8) {
+                // gsap.registerPlugin(ScrollTrigger);
+                $("#header").addClass("black");
+                document.querySelector(".img_bx_wrap").classList.add("transform");
+                setTimeout(() => {
+                    document.querySelector(".img_bx_wrap").classList.add("on");
+                }, 500);
+
+                setTimeout(() => {
+                    document.querySelector(".sec08 .page_mid_title").classList.remove("on");
+                }, 800);
+
+                // 포스터 8개만 노출이 되게(업데이트순)
+                const movieList = document.querySelectorAll(".movie_cont_desc .movie_list");
+                const totalItems = movieList.length;
+                const startIndex = totalItems - 8;
+                
+                movieList.forEach((item, index) => {
+                    if (index < startIndex) {
+                        item.classList.add('dn');
+                    }
+                });
+            }
+
+            // business
+            if(index == 9) {
+
+            }
+
+            var windowSize = $(window).width();
+            var targetIndex = windowSize <= 767 ? 9 : 10;
+            // performance
+            if(index == targetIndex) {
+                var videoSelector = windowSize <= 767 ? ".sec10 .vid.mo_ver" : ".sec10 .vid.pc_ver";
+                var player = new Vimeo.Player($(videoSelector)[0]);
+                player.play();
+
+                // count up
+                $(".counter").not(".counteron").counterUp(
+                    {
+                        delay: 7,
+                        time: 300,
+                    },
+                    { offset: "0%" }
+                );
+                $(this).waypoint(function () {
+                    $(".counter").addClass("counteron");
+                    $(".counter.on").counterUp({
+                        delay: 7,
+                        time: 300,
+                    });
+                    this.destroy();
+                });
+                $("#header").removeClass("black");
+            }else {
+                $("#header").removeClass("black");
+            }
+
+            // records
+            if(index == 11) {
+                // 그래프 영역 인터렉션
+                animateBars();
+                function animateBars() {
+                    const bars = document.querySelectorAll('.bar');
+                    const graph_dim = document.querySelector(".graph_dim");
+                    const graph_line = document.querySelector(".graph_line");
+                    const graph_desc = document.querySelector(".graph_desc");
+                
+                    bars.forEach((bar, index) => {
+                        setTimeout(() => {
+                            bar.classList.add('on');
+                            
+                            if (index === bars.length - 1) {
+                                const lineSvg = document.querySelector('.line_svg');
+                                setTimeout(() => {
+                                    lineSvg.classList.add('on');
+                                }, 1600);
+                            }
+                            
+                        }, index * 100);
+
+                        setTimeout(() => {
+                            graph_desc.classList.add("on");
+                        }, 3000);
+
+                        setTimeout(() => {
+                            graph_dim.classList.add("on")
+                            graph_line.classList.add("on")
+                        }, 1200);
+                    });
+                }
+            }
+
+            // footer
+            if (index !== 14) {
+                mainFamilySiteSelectBoxes.classList.add('dis_no');
+            } else {
+                mainFamilySiteSelectBoxes.classList.remove('dis_no');
+            }
+        },
+        onLeave: function (anchors, index) {
+            // if (index == 3) {
+            //     pauseVideoInSection();
+
+            //     function pauseVideoInSection() {
+            //         var iframe = $('.sec04 .vid')[0];
+            //         var player = new Vimeo.Player(iframe);
+            
+            //         player.pause();
+            //     }
+            // }
+            // if (index == 4) {
+            //     pauseVideoInSection();
+
+            //     function pauseVideoInSection() {
+            //         var iframe = $('.sec03 .vid')[0];
+            //         var player = new Vimeo.Player(iframe);
+            
+            //         player.pause();
+            //     }
+            // }
+        },
+        menu: "#menu",
+    });
+
+});
+
+
+// sec08 포스터 영역 슬라이드
+const mainPosterSwiper = new Swiper(".mySwiperPoster", {
+    slidesPerView: 1.658,
+    spaceBetween: 7.5,
+    breakpoints: {
+        1281: {
+            slidesPerView: 6,
+            spaceBetween: 10
+        },
+        990: {
+            slidesPerView: 5,
+            spaceBetween: 10
+        },
+        768: {
+            slidesPerView: 4,
+            spaceBetween: 10
+        },
+        501: {
+            slidesPerView: 3,
+            spaceBetween: 10
+        },
+        320: {
+            slidesPerView: 1.658,
+            spaceBetween: 7.5
+        }
+    }
+});
+
+// sec09 Business 뫼비우스 띠 마우스 모션
+let cellPhoneSize = 767;
+
+function animateBackground(event) {
+    let windowWidth = window.innerWidth;
+
+    if (windowWidth > cellPhoneSize) {
+        let windowHeight = window.innerHeight;
+        let mouseXpercentage = Math.round((event.pageX / windowWidth) * 100);
+        let mouseYpercentage = Math.round((event.pageY / windowHeight) * 100);
+
+        document.querySelector(".sec09 .loop_wrap").style.background = "radial-gradient(70vh at " + mouseXpercentage + "% " + mouseYpercentage + "%, #fa1e39, #ffa376, #FF966E)";
+    }
+}
+
+function handleResize() {
+    let windowWidth = window.innerWidth;
+
+    if (windowWidth > cellPhoneSize) {
+        sec09.addEventListener("mousemove", animateBackground);
+    } else {
+        sec09.removeEventListener("mousemove", animateBackground);
+    }
+}
+
+const sec09 = document.querySelector(".sec09");
+handleResize();
+window.addEventListener("resize", handleResize);
+
+// sec10 Performance 천단위 콤마 찍기
+const counter = document.querySelectorAll(".sec10 .number_list .counter");
+counter.forEach((el, index) => {
+    let counterNum;
+
+    if (index === counter.length - 1) {
+        counterNum = el.innerText;
+    } else {
+        counterNum = parseInt(el.innerText, 10).toLocaleString("ko-KR");
+    }
+
+    el.innerText = counterNum;
+});
+
+
+// sec12 Global Footprint 국가개수 천단위 콤마 찍기
+const countyCounters = document.querySelectorAll(".sec12 .num_wrap ul li p span");
+
+countyCounters.forEach(el => {
+    const num = parseInt(el.innerText, 10);
+    if (!isNaN(num)) {
+        el.innerText = num.toLocaleString("ko-KR");
+    }
+});
+
+// sec12 Global Footprint 지도 영역 모션 --------------------------------------------- START
+const countrys = document.querySelectorAll(".map_wrap .country");
+const pinBtn = document.querySelectorAll(".map_wrap .pin_box .img_box img");
+const mapBox = document.querySelector(".map_wrap .map_box");
+const countryMap = document.querySelectorAll(".map_wrap .country_map");
+const mapDesc = document.querySelectorAll(".map_wrap .map_desc");
+const popup = document.querySelector(".popup_cont.desc .popup");
+const closeBtn = document.querySelector(".popup_cont.desc .popup .close_btn");
+const dimmed = document.querySelector(".sec12 .dimmed");
+const countrysMo = document.querySelectorAll(".country_desc_box li");
+// const pageMidTitle = document.querySelector(".sec12 .page_mid_title");
+// const numWrap = document.querySelector(".sec12 .num_wrap");
+// const listBox = document.querySelector(".sec12 .list_box");
+
+let activeCountryIndex = null; 
+
+function handleCountryClick(index, clickedCountry) {
+    event.stopPropagation();
+    if (activeCountryIndex === index) {
+        closeCountryMap(index);
+        activeCountryIndex = null;
+    } else {
+        setActiveCountryAndMap(clickedCountry, index);
+    }
+}
+
+pinBtn.forEach((country, index) => {
+    country.addEventListener("click", (event) => {
+        handleCountryClick(index, country);
+    });
+});
+
+countrys.forEach((country, index) => {
+    country.addEventListener("click", (event) => {
+        handleCountryClick(index, country);
+    });
+});
+
+// 나라 클릭시 상세 팝업 열기
+mapDesc.forEach((mapDescElement, index) => {
+    mapDescElement.addEventListener("click", (event) => {
+        event.stopPropagation();
+        openPopup(); 
+    });
+});
+
+countrysMo.forEach((countrysMoElement, index) => {
+    countrysMoElement.addEventListener("click", (event) => {
+        event.stopPropagation();
+        openPopup(); 
+    });
+});
+
+// 팝업 닫기 버튼을 클릭했을 때
+closeBtn.addEventListener("click", (event) => {
+    event.stopPropagation();
+    closePopup();
+});
+
+// 외부 영역 클릭시 팝업, 활성화된 대륙 이미지 닫기
+document.addEventListener("click", (event) => {
+    if (popup.classList.contains("active") && !popup.contains(event.target)) {
+        closePopup(); // 팝업 닫기
+    } else if (activeCountryIndex !== null && !countryMap[activeCountryIndex].contains(event.target)) {
+        closeCountryMap(activeCountryIndex); // 활성화된 대륙 이미지 닫기
+    }
+});
+
+
+// 팝업 열기 함수
+function openPopup() {
+    popup.classList.add("active");
+
+    $.fn.fullpage.setAllowScrolling(false);
+    $.fn.fullpage.setKeyboardScrolling(false);
+
+    if (window.innerWidth > 767) { 
+        dimmed.classList.add("zidx");
+    }
+}
+
+// 팝업 닫기 함수
+function closePopup() {
+    popup.classList.remove("active");
+
+    $.fn.fullpage.setAllowScrolling(true);
+    $.fn.fullpage.setKeyboardScrolling(true);
+
+    if (window.innerWidth > 767) {
+        dimmed.classList.remove("zidx");
+    }
+}
+
+
+// 국가와 맵을 활성화하는 함수
+function setActiveCountryAndMap(clickedCountry, index) {
+    countrys.forEach((country) => country.classList.remove("active"));
+    clickedCountry.classList.add("active"); // 클릭한 국가 활성화
+
+    countryMap.forEach((map) => map.classList.remove("active"));
+    openCountryMap(index); // 클릭한 국가의 맵 열기
+    activeCountryIndex = index; // 활성화된 국가의 인덱스 설정
+}
+
+// 국가 맵 열기 함수
+function openCountryMap(index) {
+    countryMap[index].classList.add("active");
+    if (window.innerWidth > 767) {
+        dimmed.classList.add("on");
+    }
+    mapBox.classList.add("on");
+    // pageMidTitle.classList.add("zidx")
+    // numWrap.classList.add("zidx")
+    // listBox.classList.add("zidx")
+}
+
+// 국가 맵 닫기 함수
+function closeCountryMap(index) {
+    if (!popup.classList.contains("active")) {
+        countryMap[index].classList.remove("active");
+        if (window.innerWidth > 767) {
+            dimmed.classList.remove("on");
+        }
+        mapBox.classList.remove("on");
+        // pageMidTitle.classList.remove("zidx")
+        // numWrap.classList.remove("zidx")
+        // listBox.classList.remove("zidx")
+    }
+}
+
+// sec12 Global Footprint 국가 탭 모바일 버전 start ------------------
+
+if (window.innerWidth < 768) { 
+    const popupsMo =  document.querySelectorAll('.list_up .popup_cont .popup');
+    countrys.forEach((country, index) => {
+        country.addEventListener('click', function() {
+            popupsMo.forEach(popup => {
+                popup.classList.remove('active');
+            });
+            // 각 나라별 순서에 맞는 팝업창 노출하기
+            if (popupsMo[index]) {
+                popupsMo[index].classList.add('active');
+            }
+
+            dimmed.classList.add("zidx");
+            dimmed.classList.add("on");
+
+            $.fn.fullpage.setAllowScrolling(false);
+            $.fn.fullpage.setKeyboardScrolling(false);
+
+            // $('body').on('scroll touchmove mousewheel', function(event) {
+            //     event.preventDefault();
+            //     event.stopPropagation();
+            //     return false;
+            // });
+        });
+    });
+
+    // 외부영역 클릭시 전체 팝업창 닫기
+    document.addEventListener('click', function(event) {
+        popupsMo.forEach(popup => {
+            if (!popup.contains(event.target)) {
+                popup.classList.remove('active');
+                dimmed.classList.remove("zidx");
+                dimmed.classList.remove("on");
+
+                $.fn.fullpage.setAllowScrolling(true);
+                $.fn.fullpage.setKeyboardScrolling(true);
+
+                // $('body').off('scroll touchmove mousewheel');
+            }
+        });
+    });
+
+    const closeButtons = document.querySelectorAll(".list_up .popup_cont .popup .close_btn");
+    // 닫기 버튼 클릭시 팝업창 미노출
+    closeButtons.forEach(closeButton => {
+        closeButton.addEventListener("click", function() {
+            const popup = this.closest('.popup');
+            if (popup) {
+                popup.classList.remove('active');
+            }
+            dimmed.classList.remove("zidx");
+            dimmed.classList.remove("on");
+
+            $.fn.fullpage.setAllowScrolling(true);
+            $.fn.fullpage.setKeyboardScrolling(true);
+
+            // $('body').off('scroll touchmove mousewheel');
+        });
+    });
+
+}
+
+
+
+// sec12 Global Footprint 국가 탭 모바일 버전 end ------------------
+
+
+// for(let i=0; i<countrys.length; i++) {
+//     countrys[i].querySelector(".country_desc").addEventListener("click", function(){
+//         let _this = this;
+//         let panel = _this.parentNode.querySelector('.country_desc_box'); 
+
+//         countrys[i].classList.toggle("font_wh");
+
+//         if(panel.style.maxHeight) {
+//             panel.style.maxHeight = null;
+            
+//         }else {
+//             panel.style.maxHeight = panel.scrollHeight + "px";
+//         }
+
+//     });
+// }
+
+
+// sec12 지도 영역 모션 --------------------------------------------- END
+
+
+// footer select 박스 클릭시 노출
+const mainFamilySites = document.querySelector(".family_site_cont_desc");
+const mainFamilySiteSelectBoxes = document.querySelector(".main_cont .select_box");
+
+mainFamilySites.addEventListener('click', function() {
+    if (mainFamilySiteSelectBoxes.classList.contains('dis_no')) {
+        mainFamilySiteSelectBoxes.classList.remove('dis_no');
+        // $('body').on('scroll touchmove mousewheel', function(event) {
+        //     event.preventDefault();
+        //     event.stopPropagation();
+        //     return false;
+        // });
+    } else {
+        mainFamilySiteSelectBoxes.classList.add('dis_no');
+        // $('body').off('scroll touchmove mousewheel');
+    }
+});
+
+// footer 외부영역 클릭시 selectbox 없애기
+document.addEventListener('click', function(event) {
+    const withinBoundaries = event.composedPath().includes(mainFamilySiteSelectBoxes) || event.composedPath().includes(mainFamilySites);
+
+    if (!withinBoundaries && !mainFamilySiteSelectBoxes.classList.contains('dis_no')) {
+        mainFamilySiteSelectBoxes.classList.add('dis_no');
+        // $('body').off('scroll touchmove mousewheel');
+    }
+});
+
+
+

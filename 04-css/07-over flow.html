@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>overflow</title>
+    </head>
+    <body>
+        <h1>overflow</h1>
+
+        <h2>visible</h2>
+
+        <div class="box">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Modi minus nihil, iure velit dolorem totam
+            perspiciatis earum aut, facilis itaque at quasi tempora voluptates eveniet cum ratione sed consequuntur vel!
+        </div>
+        <style>
+            .box {
+                width: 150px;
+                height: 150px;
+                background-color: #fffcd2;
+            }
+        </style>
+        <h2>hidden</h2>
+        <div class="box hidden">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro commodi, sint nulla asperiores quidem
+            mollitia ipsam dolorem necessitatibus! Voluptate velit perspiciatis dignissimos quaerat corporis blanditiis
+            quae unde soluta labore ullam?
+        </div>
+        <style>
+            .hidden {
+                overflow: hidden;
+            }
+        </style>
+
+        <h2>scroll</h2>
+        <div class="box scroll">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit aut voluptatem ea soluta ex porro
+            consectetur nihil odit optio rerum maiores, natus saepe odio iure earum ullam quaerat. Officiis, in.
+        </div>
+        <style>
+            .scroll {
+                overflow: scroll;
+            }
+        </style>
+
+        <h2>auto</h2>
+        <div class="box auto">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio nulla rerum officia eius in excepturi neque
+            rem minima dolorem sit iure iste velit, distinctio quo? Placeat deleniti ipsam necessitatibus libero!
+        </div>
+        <style>
+            .auto {
+                overflow: auto;
+            }
+        </style>
+    </body>
+</html>

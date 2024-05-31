@@ -1,0 +1,163 @@
+// let vh = window.innerHeight * 0.01;
+//     document.documentElement.style.setProperty('--vh', `${vh}px`);
+
+// let mm = gsap.matchMedia();
+
+// mm.add("(min-width:401px)", ()=>{
+     
+const ani0 = gsap.timeline();
+ani0.to("#logo .logoimage", {scale :2, rotation: 720, y:-200})
+    .to("#logo .logo_three", { y: -600, scale :1.5, rotation: -60}, "-=0.5")
+
+ScrollTrigger.create({
+    animation: ani0,
+    trigger: "#logo",
+    start: "top top",
+    end: "+=1000",
+    scrub: 1,
+    pin: false,
+    markers: false,
+    anticipatePin: 1
+});
+
+const ani1 = gsap.timeline();
+ani1.from("#copy .copy_container", {y: -600, scale :0.5, rotation: 80}, "-=0.5")
+ 
+ScrollTrigger.create({
+    animation: ani1,
+    trigger: "#copy",
+    start: "top 90%",
+    end: "+=1500",
+    scrub: 1,
+    pin: false,
+    markers: false,
+    anticipatePin: 1
+});
+
+const ani2 = gsap.timeline();
+ani2.from("#year80 .line", {y: -600, rotation: 10})
+    .from("#year80 .years", {y: -200, scale :0.5, rotation: 10}, "-=0.5")
+    .from("#year80 .group-card", {y: 200, scale :0.5, stagger: {amount: 3, axis: "x", from: "start"}})
+ 
+ScrollTrigger.create({
+    animation: ani2,
+    trigger: "#year80",
+    start: "top 90%",
+    end: "+=4800",
+    scrub: 1,
+    pin: false,
+    markers: false,
+    anticipatePin: 1
+});
+
+const ani3 = gsap.timeline();
+ani3.from("#year90 .line", {y: -600, rotation: -10})
+    .from("#year90 .years", {y: -200, scale :0.5, rotation: 10}, "-=0.5")
+    .from("#year90 .group-card", {y: 200, scale :0.5, stagger: {amount: 4, axis: "x", from: "start"}})
+ 
+ScrollTrigger.create({
+    animation: ani3,
+    trigger: "#year90",
+    start: "top 90%",
+    end: "+=4800",
+    scrub: 1,
+    pin: false,
+    markers: false,
+    anticipatePin: 1
+});
+
+const ani4 = gsap.timeline();
+ani4.from("#footer_container .footer", {y: -500, scale :0.5, rotation: 10})
+ 
+ScrollTrigger.create({
+    animation: ani4,
+    trigger: "#footer_container",
+    start: "top 90%",
+    end: "bottom bottom",
+    scrub: 1,
+    pin: false,
+    markers: false,
+    anticipatePin: 1
+});
+// })
+
+// mobile
+
+// mm.add("(max-width:400px)", ()=>{
+
+//     const ani0 = gsap.timeline();
+//     ani0.to("#logo .logoimage", {scale :1.8, rotation: 720, y:-200})
+//         .to("#logo .logo_three", { y: -600, scale :1.8, rotation: -60}, "-=0.5")
+    
+//     ScrollTrigger.create({
+//         animation: ani0,
+//         trigger: "#logo",
+//         start: "top top",
+//         end: "bottom 30%",
+//         scrub: 1,
+//         pin: false,
+//         markers: false,
+//         anticipatePin: 1
+//     });
+    
+//     const ani1 = gsap.timeline();
+//     ani1.from("#copy .copy_container", {y: -800, scale :0.5, rotation: 80})
+     
+//     ScrollTrigger.create({
+//         animation: ani1,
+//         trigger: "#copy",
+//         start: "top 90%",
+//         end: "+=1500",
+//         scrub: 1,
+//         pin: false,
+//         markers: false,
+//         anticipatePin: 1
+//     });
+    
+//     const ani2 = gsap.timeline();
+//     ani2.from("#year80 .line", {y: -600, rotation: 10})
+//         .from("#year80 .years", {y: -200, scale :0.5, rotation: 10}, "-=0.5")
+//         // .from("#year80 .group-card", {y: 200, scale :0.5, stagger: {amount: 0, from: "left"}})
+     
+//     ScrollTrigger.create({
+//         animation: ani2,
+//         trigger: "#year80",
+//         start: "top 90%",
+//         end: "+=2500",
+//         scrub: 1,
+//         pin: false,
+//         markers: false,
+//         anticipatePin: 1
+//     });
+    
+//     const ani3 = gsap.timeline();
+//     ani3.from("#year90 .line", {y: -600, rotation: -10})
+//         .from("#year90 .years", {y: -300, scale :0.5, rotation: 10}, "-=0.5")
+//         // .from("#year90 .group-card", {y: 200, scale :0.5, stagger: {amount: 0, from: "left"}})
+     
+//     ScrollTrigger.create({
+//         animation: ani3,
+//         trigger: "#year90",
+//         start: "top 90%",
+//         end: "+=2500",
+//         scrub: 1,
+//         pin: false,
+//         markers: false,
+//         anticipatePin: 1
+//     });
+    
+//     const ani4 = gsap.timeline();
+//     ani4.from("#footer_container .footer", {y: -500, scale :0.5, rotation: 10})
+     
+//     ScrollTrigger.create({
+//         animation: ani4,
+//         trigger: "#footer_container",
+//         start: "top 90%",
+//         end: "+=1000",
+//         scrub: 1,
+//         pin: false,
+//         markers: false,
+//         anticipatePin: 1
+//     });
+    
+// })

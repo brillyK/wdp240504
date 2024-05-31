@@ -1,0 +1,27 @@
+@font-pace {
+    font-family: 'MoveSans';
+    src: url('../font/AnyConv.com__MoveSans-Light.woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-pace {
+    font-family: 'MoveSans';
+    src: url('../font/AnyConv.com__MoveSans-Medium.woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-pace {
+    font-family: 'MoveSans';
+    src: url('../font/AnyConv.com__MoveSans-Bold.woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MoveSans-Bold';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/MoveSans-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}

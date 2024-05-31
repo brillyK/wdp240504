@@ -1,0 +1,44 @@
+var validUtil = {
+    invalid : function(selector){
+        var test = $.trim($(selector).val());
+        return test  === '';
+    },
+
+    invalidCheck:function(selector){
+        return $(selector+":checked").length < 1
+    },
+
+    invalidEmail:function(selector){
+        var text = $.trim($(selector).val());
+        var pattern = /\S+@\S+\.\S+/;
+        return !pattern.test(text);
+    },
+
+    invalidTel : function(selector) {
+        var text = $.trim($(selector).val());
+        var pattern = /^(\d+-?)+\d+$/;
+        return !pattern.test(text);
+    },
+
+    invalidPassword : function(selector){
+        var text = $.trim($(selector).val());
+        if(text  === ''){
+            return true;
+        }
+        // var chkPassword = new RegExp("^(?=.*[0-8])(?=.*[a-z])(?=.*[~!^*-.?{}])[a-z0-9~!^*-.?{}]{8,}$");
+        var pattern = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!^*-.?{}]).{8,}$/;
+        return !pattern.test(text);
+    },
+
+    invalidId : function(selector){
+        var text = $.trim($(selector).val());
+        if(text  === ''){
+            return true;
+        }
+        var pattern = /^[a-zA-Z0-9]+$/;
+        return !pattern.test(text);
+    }
+
+
+}
+

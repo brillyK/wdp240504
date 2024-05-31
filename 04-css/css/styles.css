@@ -1,0 +1,142 @@
+/* 비권장 */
+@import 'fonts.css';
+
+/* 기본 셋팅 값 : reset */
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    letter-spacing: -0.4px
+    line-height: 1.5;
+    /* 크롬 폰트 사이즈 기본값은 16px이다. */
+    font-size: 16px;
+    font-family: "Nanum Myeongjo", serif;
+    box-sizing: border-box;
+}
+
+@media only screen and (min-width: 600px) {
+    * {
+      background-color: rgba(107, 218, 255, 0.226);
+      font-size: 14px;
+    }
+  }
+
+main {
+    background-color: lightpink;
+}
+
+#header {
+    background-color: lightblue;
+}
+#header #logo a {
+    display: block;
+    width: 170px;
+    text-align: center;
+    color: red;
+    font-weight: normal;
+    font-size: 1.875em
+    font-family: "Danfo", serif;
+}
+
+#header #logo a::before {
+    content: "\f714";
+    font-family: 'Line Awesome Free';
+    font-weight: 900;
+}
+
+#gnb > ul > li {
+    border: 1px solid green;
+}
+
+.gnb.depth1. > li {
+    border: 1px solid blue;
+}
+
+.gnb.depth1. > li > a {
+    font-size: 1.25em;
+}
+
+.gnb .depth2 li {
+    border: 1px solid red;
+}
+
+/* util */
+.util .btu-menu {
+    width: 170px;
+
+    background-color: rgb(31, 31, 31);
+    color: yellow;
+    border: none;
+}
+
+.util .btu-menu:hover {
+    background-color: red;
+    color: black;
+}
+
+.form-search .inp-search {
+    border: 1px solid red;
+}
+
+.form-search .inp-search:focus {
+    background-color: aqua;
+}
+
+.main-intro {
+    border: 1px solid red;
+}
+
+.bg-grey {
+    background-color: #f0f0f0;
+}
+
+.corp-area .list-crop {
+    display: flex;
+}
+
+.corp-area .list-crop li:first-child {
+    border: 1px solid rgb(38, 0, 255);
+}
+
+.corp-area .list-crop li:nth-child(2) {
+    border: 1px solid rgb(1, 170, 24);
+}
+
+.corp-area .list-crop li:nth-last-child(2) {
+    border: 1px solid rgb(255, 196, 0);
+}
+
+.corp-area .list-crop li:last-child {
+    border: 1px solid rgb(255, 102, 0);
+}
+
+.depth1 > li > a::before {
+    content: "\f071";
+    font-family: 'Line Awesome Free';
+    font-weight: 900;
+}
+
+.corp-area li::before {
+    content: '';
+    display: inline-block;
+    width: 5px;
+    height: 15px;
+    margin: 0 10px;
+    background-color: #333;
+}
+
+.corp-area li:first-child::before {
+    display: none;
+}
+
+.corp-area li::after {
+    content: '<';
+}
+
+.corp-area a::before {
+    content: '==';
+}
+
+.corp-area a::after {
+    content: '==';
+}
