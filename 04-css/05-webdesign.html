@@ -20,17 +20,25 @@
             <!-- header -->
             <header>
                 <h1>
-                    <a href="#">logo</a>
+                    <a href="#"
+                        >logo
+                        <span>- sublogo</span>
+                    </a>
                 </h1>
                 <nav id="gnb">
-                    <button class="btn-menu">
+                    <!-- <button class="btn-menu">
                         <i class="las la-bars"></i>
                         <span>전체메뉴 보기</span>
-                    </button>
+                    </button> -->
+                    <input type="checkbox" name="btnMenu" id="btnMenu" class="btn-menu" />
+                    <label for="btnMenu" class="label-menu">
+                        <span>전체메뉴 보기</span>
+                    </label>
                     <!-- <div class="nav-bg"></div> -->
                     <ul class="depth1">
-                        <li>
-                            <a href="#">메뉴1</a>
+                        <!-- 메뉴 활성화: .active 추가 -->
+                        <li class="active">
+                            <a href="#">메뉴1 </a>
                             <ul class="depth2">
                                 <li><a href="#">서브메뉴1</a></li>
                                 <li><a href="#">서브메뉴2</a></li>

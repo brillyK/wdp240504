@@ -1,0 +1,119 @@
+2024.06.03
+
+SEO : 검색 잘 걸리게 해달라=매타테그, 타이틀,H1~3
+NAVER/GOOGLR ANALYSIS : 방문자 통계
+
+vscode > 익스텐션 > px to rem&rpx&vw 깔기
+
+sass는 컴터가 인식 x
+vscode에서 확장 live sass compiler 설치해서 css로 변환
+까고 sass에서 하단에 watching 누르면 css폴더 만들고 실시간으로 바꿔줌
+
+vscode >설정 > 상단 오른쪽setting.json에 다 지우고 붙여넣기
+
+{
+    "git.confirmSync": false,
+    "editor.mouseWheelZoom": true,
+    "window.zoomLevel": 0,
+    "editor.minimap.enabled": false,
+    "editor.fontFamily": "Consolas, D2Coding, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 14,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false,
+        "postcss": true
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "explorer.confirmDragAndDrop": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "prettier.printWidth": 120,
+    "prettier.tabWidth": 4,
+    "prettier.singleQuote": true,
+    "prettier.trailingComma": "all",
+    "prettier.semi": false,
+    "files.autoSave": "onFocusChange",
+    "liveSassCompile.settings.formats": [
+        {
+            "format": "expanded",
+            "extensionName": ".css",
+            "savePath": "~/../css/"
+        }
+        // {
+        //     "format": "compressed",
+        //     "extensionName": ".min.css",
+        //     "savePath": "~/../css/"
+        // },
+    ],
+    "liveServer.settings.donotShowInfoMsg": true,
+    "git.autofetch": true,
+    "editor.wordSeparators": "`~!@%^&*$()=+[{]}\\|;:'\",.<>/?",
+    "highlight-matching-tag.styles": {
+        "opening": {
+            "left": {
+                "underline": "yellow"
+            },
+            "right": {
+                "surround": "#155FFA"
+            },
+            "name": {
+                "highlight": "rgba(180, 20, 80, 0.3)"
+            }
+        },
+        "closing": {
+            "full": {
+                "custom": {
+                    "dark": {
+                        "borderWidth": "0 0 1px 0",
+                        "borderColor": "white",
+                        "borderStyle": "solid",
+                        "borderRadius": "4px",
+                        "right": "10px"
+                    },
+                    "light": {
+                        "borderWidth": "0 0 1px 0",
+                        "borderColor": "brown",
+                        "borderStyle": "solid",
+                        "borderRadius": "4px",
+                        "right": "10px"
+                    }
+                }
+            }
+        }
+    },
+    "liveServer.settings.donotVerifyTags": true,
+    "emmet.syntaxProfiles": {
+        "javascript": "html"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit"
+    },
+    "emmet.triggerExpansionOnTab": true, // tab
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "*html": "html"
+    },
+    "files.associations": {
+        "*.js": "javascriptreact"
+    },
+    "editor.hover.enabled": true,
+    "terminal.integrated.customGlyphs": false,
+    "terminal.integrated.gpuAcceleration": "off",
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.stickyScroll.enabled": false,
+    "editor.accessibilitySupport": "off",
+    "git.openRepositoryInParentFolders": "always",
+    "github.copilot.editor.enableAutoCompletions": true,
+    "git.enableSmartCommit": true,
+    "workbench.colorTheme": "Default High Contrast",
+    "editor.wordWrap": "on",
+    "cssrem.rootFontSize": 16
+}
+
+
+
+https://cdnjs.com/

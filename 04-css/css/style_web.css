@@ -1,4 +1,4 @@
-@import 'fonts.css';
+@import 'fonts1.css';
 /* 변수 저장 */
 :root {
     --primary: #ff0000;
@@ -18,6 +18,17 @@
     line-height: 1.5;
     letter-spacing: -0.5px;
     list-style: none;
+    font-size: 14px;
+}
+@media screen and (max-width: 1200px) {
+    * {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 600px) {
+    * {
+        font-size: 18px;
+    }
 }
 
 /* 공통 컴포넌트 */
@@ -54,7 +65,7 @@ a:hover {
     margin-left: 10px;
     font-family: 'Line Awesome Free';
     font-weight: 900;
-    font-size: 20px;
+    font-size: 1.48em;
 }
 
 .btn-more {
@@ -62,7 +73,14 @@ a:hover {
     top: -120px;
     right: 0;
 }
-
+@media screen and (max-width: 600px) {
+    body {
+        background-color: olive;
+    }
+    .btn-g {
+        min-width: 0;
+    }
+}
 /* layout */
 .wrap {
     max-width: 1260px;
@@ -84,6 +102,10 @@ header h1 {
 header h1 a {
     display: flex;
     align-items: center;
+    font-size: 2.8571rem;
+}
+header h1 a span {
+    font-size: 1rem;
 }
 #gnb {
     display: flex;
@@ -140,7 +162,7 @@ header h1 a {
 #gnb .depth2 li a {
     display: block;
     padding: 5px 0;
-    font-size: 14px;
+    font-size: 1rem;
     text-align: center;
 }
 #gnb .depth2 li a:hover {
@@ -158,22 +180,8 @@ header h1 a {
     height: 100px;
     background: var(--white);
 }
-#gnb .btn-menu {
-    display: none;
-}
-#gnb .btn-menu i {
-    font-size: 30px;
-}
-#gnb .btn-menu span {
-    position: absolute;
-    top: 0;
-    left: 0;
-    text-indent: -9999px;
-    font-size: 0;
-    line-height: 0;
-}
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1600px) {
     body {
         background-color: lightblue;
     }
@@ -182,18 +190,94 @@ header h1 a {
     }
     #gnb .btn-menu {
         display: block;
+        background: none;
+        border: none;
+        position: relative;
+        z-index: 1010;
     }
     #gnb .depth1 {
+        display: block;
+        padding: 100px 30px 30px;
+        position: fixed;
+        top: 0%;
+        left: 100%;
+        width: 100%;
+        height: 100vh;
+        background: var(--white);
+        transition: left 0.3s;
+    }
+    #gnb .depth1 > li {
+        margin-bottom: 20px;
+        border-radius: 10px;
+        background: #ffe7e7;
+        font-size: 1.4286rem;
+        font-weight: bold;
+        color: var(--primary);
+    }
+    #gnb .depth1 > li > a {
+        position: relative;
+    }
+    #gnb .depth1 > li > a::after {
+        content: '\f067';
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        font-family: 'Line Awesome Free';
+        font-weight: 900;
+    }
+    #gnb .depth2 {
+        position: static;
+        background-color: transparent;
+    }
+    #gnb .active .depth2 {
+        padding-bottom: 20px;
+        max-height: none;
+        opacity: 1;
+    }
+    #btnMenu {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        border: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    #gnb .btn-menu {
         display: none;
     }
-}
-
-@media screen and (max-width: 600px) {
-    body {
-        background-color: olive;
+    #gnb .label-menu i {
+        font-size: 2.1429rem;
     }
-    .wrap {
-        padding: 0 20px;
+    #gnb .label-menu span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        text-indent: -9999px;
+        font-size: 0;
+        line-height: 0;
+    }
+    #gnb .label-menu {
+        position: relative;
+        z-index: 1200;
+    }
+    #gnb .label-menu:before {
+        content: '\f0c9';
+        font-family: 'Line Awesome Free';
+        font-weight: 900;
+        font-size: 3.5714rem;
+    }
+    #btnMenu:checked + .label-menu::before {
+        content: '\f00d';
+        font-family: 'Line Awesome Free';
+        font-weight: 900;
+    }
+    #btnMenu:checked ~ .depth1 {
+        left: 0;
+        background: var(--white);
     }
 }
 
@@ -240,13 +324,13 @@ header h1 a {
     display: block;
     margin-bottom: 20px;
     font-family: 'MoveSans-Bold';
-    font-size: 40px;
+    font-size: 2.8571rem;
     line-height: 1.2;
     color: var(--white);
 }
 .slide-intro .slide-txt p {
     margin-bottom: 50px;
-    font-size: 20px;
+    font-size: 1.4286rem;
     color: var(--white);
     opacity: 0.7;
 }
@@ -296,7 +380,7 @@ main {
 .sec-g .sec-tit {
     display: inline-block;
     margin-bottom: 50px;
-    font-size: 50px;
+    font-size: 3.5714rem;
     font-weight: bold;
     text-align: center;
     border-bottom: 5px solid var(--primary);
@@ -330,11 +414,11 @@ main {
 }
 .sec-business .text-wrap .tit {
     margin-bottom: 20px;
-    font-size: 40px;
+    font-size: 2.8571rem;
     font-weight: 700;
 }
 .sec-business .text-wrap .txt {
-    font-size: 18px;
+    font-size: 1.2857rem;
     color: #575757;
 }
 .sec-business .btn-wrap {
@@ -347,6 +431,20 @@ main {
     width: 250px;
     margin-bottom: 10px;
 }
+
+@media screen and (max-width: 1200px) {
+    .sec-business .sec-cont {
+        flex-direction: column;
+    }
+    .sec-business .col-left {
+        width: 100%;
+    }
+    .sec-business .col-right {
+        width: 100%;
+        padding: 60px 0 0;
+    }
+}
+
 .banner {
     display: flex;
     justify-content: center;
@@ -357,7 +455,7 @@ main {
     /* background-size: cover; */
     /* background-attachment: fixed; */
     text-align: center;
-    font-size: 30px;
+    font-size: 2.1429rem;
     font-weight: bold;
     color: var(--white);
 }
@@ -414,6 +512,21 @@ main {
 }
 .sec-news .txt em {
     font-style: normal;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        background-color: olive;
+    }
+    .wrap {
+        padding: 0 20px;
+    }
+    .sec-news .list-news {
+        flex-direction: column;
+    }
+    .sec-news .list-news li {
+        width: 100%;
+    }
 }
 
 /* main section {
