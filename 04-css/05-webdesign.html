@@ -10,16 +10,18 @@
         />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
         <link rel="stylesheet" href="./css/style_web.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
         <script defer src="./js/script.js"></script>
+        <script src="./js/comm.js"></script>
         <!-- defer 하단의 html 코드를 먼저 읽고 스크립트 적용 -->
     </head>
     <body>
         <!-- 가로 1200px, 가운데 정렬 -->
-        <div class="wrap">
+        <div id="wrap" class="wrap">
             <!-- header -->
             <header>
-                <h1>
+                <h1 id="logo">
                     <a href="#"
                         >logo
                         <span>- sublogo</span>
@@ -35,10 +37,10 @@
                         <span>전체메뉴 보기</span>
                     </label>
                     <!-- <div class="nav-bg"></div> -->
-                    <ul class="depth1">
+                    <ul class="depth1 navbar">
                         <!-- 메뉴 활성화: .active 추가 -->
                         <li class="active">
-                            <a href="#">메뉴1 </a>
+                            <a href="#business">business </a>
                             <ul class="depth2">
                                 <li><a href="#">서브메뉴1</a></li>
                                 <li><a href="#">서브메뉴2</a></li>
@@ -48,7 +50,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#">메뉴2</a>
+                            <a href="#news">news</a>
                             <ul class="depth2">
                                 <li><a href="#">서브메뉴1</a></li>
                                 <li><a href="#">서브메뉴2</a></li>
@@ -56,7 +58,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#">메뉴3</a>
+                            <a href="#bbs">bbs</a>
                             <ul class="depth2">
                                 <li><a href="#">서브메뉴1</a></li>
                                 <li><a href="#">서브메뉴2</a></li>
@@ -79,7 +81,7 @@
                 <div class="swiper-wrapper">
                     <!-- 1 -->
                     <div class="swiper-slide">
-                        <video src="./images/비디오 샘플.mp4" muted></video>
+                        <img src="./images/map.jpg" muted></img>
                         <div class="slide-txt">
                             <strong
                                 >Lorem ipsum dolor sit, <br />
@@ -135,7 +137,7 @@
             <script></script>
             <!-- content -->
             <main>
-                <section class="sec-g sec-business">
+                <section id="business" class="sec-g sec-business">
                     <h2 class="sec-tit"><span>웰컴복지재단</span>의 복지사업</h2>
                     <div class="sec-cont">
                         <div class="col-left">
@@ -162,7 +164,7 @@
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. <br />
                     Quibusdam, doloremque!
                 </div>
-                <section class="sec-g sec-news">
+                <section id="news" class="sec-g sec-news">
                     <h2 class="sec-tit"><span>웰컴</span>뉴스</h2>
                     <div class="sec-cont">
                         <ul class="list-news">
@@ -223,7 +225,7 @@
                         <a href="#" class="btn-g btn-arrow btn-more">더보기</a>
                     </div>
                 </section>
-                <section class="sec-g sec-bbs bg-grey">
+                <section id="bbs" style="height: 100vh;" class="sec-g sec-bbs bg-grey">
                     <h2 class="sec-tit"><span>공지</span>사항</h2>
                     <div class="sec-cont"></div>
                 </section>
@@ -232,7 +234,9 @@
             <footer>
                 <div>로고</div>
                 <div class="copyright">copyright</div>
-                <div>sns</div>
+                <div>
+                    <a href="#wrap">TOP</a>
+                </div>
             </footer>
         </div>
         <!-- layer -->
