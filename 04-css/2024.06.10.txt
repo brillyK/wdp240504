@@ -1,0 +1,11 @@
+2024.06.10
+
+[javascript란]
+
+
+(스크롤시 이벤트 발생)
+
+odada.me > library >
+CSS를 이용한 Parallax Scrolling
+
+GSAP을 이용한 Parallax Scrolling
