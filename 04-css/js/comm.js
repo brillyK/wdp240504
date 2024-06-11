@@ -66,4 +66,14 @@ $(function () {
             )
         } // End if
     })
+    AOS.init({
+        //key : value
+        offset: 120,
+        delay: 0,
+        duration: 600,
+        easing: 'ease-in-out',
+        once: false,
+        mirror: false,
+        anchorPlacement: 'top-bottom',
+    })
 })

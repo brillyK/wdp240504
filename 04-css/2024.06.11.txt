@@ -1,0 +1,10 @@
+2024.06.11
+
+[범정부디지털 서비스 ux/ui 공통 가이드 라인
+https://uiux.egovframe.go.kr/guide/index.html
+
+
+https://openpath.kr/lecturedetail/P1000000049
+
+cofilet 코파일럿_마이크로소프트:자동 코드 만들어줌 달 2만원
+vscode,github도 마이크로 꺼임 연동됨

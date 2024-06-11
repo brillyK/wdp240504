@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>scroll-js</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden;
+            }
+            .container {
+                background-image: url(https://images.unsplash.com/photo-1713640774346-10107ccb2231?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+            }
+            .item {
+                width: 200px;
+                height: 200px;
+                background-color: lightblue;
+                transform-origin: 0 0;
+            }
+            .item2 {
+                position: relative;
+                top: 200px;
+                left: -100%;
+                width: auto;
+                background-color: lightcoral;
+                /* transform: translateX(-100%); */
+            }
+            .item2 .box {
+                display: flex;
+                list-style: none;
+            }
+            .item2 .box li {
+                width: 200px;
+                height: 160px;
+                margin: 20px;
+                background-color: lightgreen;
+            }
+            .item3 {
+                background-color: lightgoldenrodyellow;
+            }
+        </style>
+        <script>
+            //준비 이벤트 넣어줘야 함
+        </script>
+        <style>
+            .container {
+                height: 300vh;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="item item1">item1</div>
+            <div class="item item2">
+                <ul class="box">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            <div class="item item3">item3</div>
+        </div>
+
+        <script>
+            //준비 이벤트 넣어주지 않아도 된다.
+            const item = document.querySelector('.item')
+            // console.log(item)
+
+            item.style.backgroundColor = 'pink'
+            item.style.transform = 'translate(100px 200px)'
+
+            // window.addEventListener('이벤트', 함수);
+            window.addEventListener('scroll', function () {
+                const item1 = document.querySelector('.item1')
+                const item2 = document.querySelector('.item2')
+
+                const scrolled = window.scrollY //스크롤된 양
+                console.log('스크롤 값', scrolled)
+                console.log(`스크롤 값의 50% ${scrolled * 0.5}`) //최신버전 쓰는 방식
+
+                item1.style.transform = `scale(${scrolled * 0.01})`
+
+                item2.style.transform = `translate(${scrolled}px, ${scrolled}px)`
+            })
+
+            const items = ['item1', 'item2', 'item3']
+            items.forEach(function (a) {
+                console.log(a)
+            })
+        </script>
+    </body>
+</html>
