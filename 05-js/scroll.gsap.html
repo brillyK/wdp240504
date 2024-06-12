@@ -4,9 +4,37 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>scroll.gsap</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
         <script src=" https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
         <style>
+            #header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100px;
+                z-index: 1000;
+                background-color: rgba(49, 49, 49, 0.9);
+                color: aliceblue;
+                text-align: center;
+                line-height: 100px;
+                font-size: 2.1875rem;
+                font-weight: 700;
+            }
+            #to-top {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                z-index: 999;
+                width: 100px;
+                height: 100px;
+                background-color: rgb(49, 49, 49);
+                color: aliceblue;
+                text-align: center;
+                line-height: 100px;
+                border-radius: 5px;
+            }
             .item1 {
                 width: 200px;
                 height: 200px;
@@ -39,8 +67,50 @@
                 background-color: rgb(130, 128, 240);
             }
         </style>
+        <script>
+            //변수설정
+            //위로 넣을 때는 준비 이벤트 안쪽에 넣어줘야함
+            $(function () {
+                const headerEl = $('#header')
+
+                headerEl.css({
+                    backgroundColor: 'red',
+                    opacity: 0.7,
+                })
+
+                //window가 스크롤 시 이벤트 발생
+                // $(window).on('이벤트', 함수)
+                $(window).on('scroll', function () {
+                    const scrollTopEl = $(window).scrollTop()
+                    const toTopEl = $('#to-top')
+                    //만약 스크롤 값이 200px 이상이면
+                    //header없애고 totop은 보이고
+                    //아닐 시 header보이고 totop은 없애고
+                    if (scrollTopEl > 200) {
+                        gsap.to(headerEl, {
+                            y: -100,
+                            duration: 0.5,
+                        })
+                        gsap.to(toTopEl, {
+                            x: 0,
+                            duration: 0.5,
+                        })
+                    } else {
+                        gsap.to(headerEl, {
+                            y: 0,
+                            duration: 0.5,
+                        })
+                        gsap.to(toTopEl, {
+                            x: 130,
+                            duration: 0.5,
+                        })
+                    }
+                })
+            })
+        </script>
     </head>
     <body>
+        <div id="header">header</div>
         <section class="sec1">
             <div class="box1"></div>
         </section>
@@ -53,6 +123,8 @@
             <div class="item2"></div>
             <div class="item3"></div>
         </div>
+
+        <div id="to-top">top</div>
 
         <script>
             gsap.registerPlugin(ScrollTrigger)
