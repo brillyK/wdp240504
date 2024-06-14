@@ -1,0 +1,278 @@
+(function($, viewport){
+	$(document).ready(function(){
+
+function documentH(){ 
+	var sectionH = $(window).innerHeight();
+	$('.section').css('height',sectionH); 
+
+}
+documentH();
+
+
+//pc 인덱스 메뉴
+	$(".menu-open a").click(function(){
+		if(viewport.is('>=md')) {	
+			 setTimeout(function() { 
+					$(".header").addClass('write');
+				},100);
+			$(".menu-close a").addClass('active'); 
+			$('.m-menu').show().animate({ 'margin-right' : '0' }, 800, function() { });
+			$("body").css('position' ,'fixed');
+		}
+		return false; 
+	});
+
+
+
+
+$(".menu-close a").click(function(){
+		if(viewport.is('>=md')) {	
+			$(this).removeClass('active'); 
+			$(".header").removeClass('write');
+			$("body").css('position' ,'relative');
+			$('.m-menu').animate({ 'margin-right' : '-100%' }, 800, function() { }).queue(function(){
+				$(this).hide();
+				$(this).dequeue();
+			});
+		}
+	return false;
+
+}); 
+
+
+
+
+// 모바일 터치 풀페이지 동작
+var startX,startY, endX,endY;
+$(".m-tuch").on('touchstart',function(event){
+	event.preventDefault();
+    startX = event.originalEvent.changedTouches[0].screenX;
+    startY = event.originalEvent.changedTouches[0].screenY;
+});
+$(".m-tuch").on('touchend',function(event){
+	event.preventDefault();
+     endX=event.originalEvent.changedTouches[0].screenX;
+     endY=event.originalEvent.changedTouches[0].screenY;
+    if(startY-endY>50){
+		//삼다수 이미지 빠르게 빼려고
+		if($(".section03").hasClass('active')){
+				$('.fix-samdasoo').removeClass('fadeIn');		
+		}
+
+		moveTop = $(this).parent().next().offset().top;
+		$('html,body').animate({
+				scrollTop: moveTop + 'px'
+			}, 700);
+
+     }else if(endY-startY>50){
+		moveTop = $(this).parent().prev().offset().top;
+
+			$('html,body').animate({
+				scrollTop: moveTop + 'px'
+			}, 700);
+
+
+     }else if(startY-endY<50 || endY-startY<50 ){
+       event.preventDefault();
+     }	
+});
+
+
+
+
+
+	instakey();
+	instakey_scroll();
+
+	/* 핫 키 스크롤 */
+	$(window).scroll(function(){
+		instakey_scroll();
+	});
+   	//핫키 스크롤
+	function instakey_scroll(){
+
+		if($(document).scrollTop()>=$('#section04').offset().top-100)
+		{	
+			$('.fix-samdasoo').removeClass('fadeIn');
+			$('.fix-samdasoo').removeClass('left right'); 
+			$('.position-link').addClass('write'); 
+			$('.header').removeClass('write'); 
+			$('.position-link li').removeClass('active');
+			$('.position-link .list04').addClass('active');
+			$('.section').removeClass('active');
+			$('.section04').addClass('active');
+		}
+		else if($(document).scrollTop()>=$('#section03').offset().top-100)
+		{	
+			$('.fix-samdasoo').addClass('fadeIn');
+			$('.fix-samdasoo').removeClass('left right'); 
+			$('.fix-samdasoo').addClass('left'); 
+			$('.position-link').addClass('write'); 
+			$('.header').addClass('write'); 
+			$('.position-link li').removeClass('active');
+			$('.position-link .list03').addClass('active');
+			$('.section').removeClass('active');
+			$('.section03').addClass('active');
+		}
+		else if($(document).scrollTop()>=$('#section02').offset().top-100)
+		{
+			$('.fix-samdasoo').addClass('fadeIn');
+			$('.fix-samdasoo').removeClass('left right'); 
+			$('.fix-samdasoo').addClass('right'); 
+			$('.position-link').addClass('write'); 
+			$('.header').addClass('write'); 
+			$('.position-link li').removeClass('active');
+			$('.position-link .list02').addClass('active');
+			$('.section').removeClass('active');
+			$('.section02').addClass('active');
+		}
+		else
+		{
+			$('.fix-samdasoo').addClass('fadeIn');
+			$('.fix-samdasoo').removeClass('left right'); 
+			$('.position-link').removeClass('write'); 
+			$('.header').removeClass('write'); 
+			$('.position-link li').removeClass('active');
+			$('.position-link .list01').addClass('active');
+			$('.section').removeClass('active');
+			$('.section01').addClass('active');
+		}
+	}
+	/* 핫키 움직임*/
+	function instakey(){
+		$('.position-link a').click(function() {
+			var transfer = $(this).attr('href');
+			//$('.position-link a').removeClass('active');
+			//$(this).addClass('active');
+			if($(document).scrollTop() > 300)	term = 0;
+			else	term = 0;
+			$('body,html').animate({scrollTop: $(transfer).offset().top-term}, 1000);
+			instakey_scroll()
+			return false;
+		});
+		
+	}
+
+
+
+
+
+
+
+var controller = new ScrollMagic.Controller();
+  
+/*  var tween1 = TweenMax.to('.fix-samdasoo', 1, {
+
+    rotation: 30,
+    x: 0
+  });
+ 
+   var tween2 = TweenMax.to('.fix-samdasoo', 1, {
+    rotation: -30,
+
+    x: 0
+  });
+
+  */
+	 var tween3 = TweenMax.to('.fix-samdasoo', 0.1, {
+	opacity: 0,
+    x: 0
+  });
+  
+
+/*
+  var scene = new ScrollMagic.Scene({
+    triggerElement: ".section02",
+	triggerHook:1,
+		offset:0,
+    duration: "100%"
+  })
+  .setTween(tween1)
+  .addTo(controller)
+ /* .addIndicators({
+    name: "1"
+  }) 
+*/
+/*
+  var scene2 = new ScrollMagic.Scene({
+    triggerElement: ".section03",
+	triggerHook:1,
+	offset:0,
+    duration: "100%"
+  })
+  .setTween(tween2)
+  .addTo(controller)
+ /* .addIndicators({
+    name: "2"
+  }) 
+*/
+var scene3 = new ScrollMagic.Scene({
+    triggerElement: ".section04",
+	triggerHook:1,
+	offset:0,
+    duration: "30%"
+  })
+  .setTween(tween3)
+  .addTo(controller)
+ /* .addIndicators({
+    name: "3"
+  }) 
+*/
+
+
+
+
+
+/*인스타 연동*/
+ var feed = new Instafeed({
+		target:'instagramView',
+		template:'<div class="swiper-slide"><a  href="{{link}}"  style="background-image:url({{image}});" target="_blank" title="인스타 새창열림"></a></div>' ,
+      accessToken:'IGQWROeUNZAcExWQW5PNGpfanBGYl9IY1RqckNLN2FyR1FyVmkteDFMX0JzOXFhQzVQWWlhQ2paN242Sms3SFdTZA0RQTl83VjZAvbkNJV3BzLUthTFluLWE1ZAGhpd3FDYWRmY1NpRU9uZA0dmWTFVWVBvRGRwcDJMSGcZD',
+		 after: function () {
+
+            var swiper = new Swiper('.swiper-container', {
+				slidesPerView: 3,  
+				slidesPerGroup: 1,
+				spaceBetween: 20,
+				autoplay: true,
+				loop:true,
+				centeredSlides: true, 
+				observer: true,
+				clickable: true,
+				breakpoints: {
+					640: {
+						slidesPerView: 3,  
+						spaceBetween: 10,
+					},
+					768: {
+						slidesPerView: 3,  
+						spaceBetween: 20,
+					},
+					1024: {
+						slidesPerView: 3,  
+						spaceBetween: 20,
+					},
+				},
+				navigation: {
+					nextEl: '.instar-btn .btn-next',
+					prevEl: '.instar-btn .btn-prev',
+				},
+            });
+        }
+    });
+    feed.run();
+
+
+	$(window).resize(
+		viewport.changed(function() {
+
+		   feed.run();
+
+		})
+	);
+
+
+
+
+	});
+})(jQuery, ResponsiveBootstrapToolkit);

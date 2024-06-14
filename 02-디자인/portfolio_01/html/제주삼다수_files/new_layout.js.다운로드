@@ -1,0 +1,166 @@
+(function($, viewport){
+	$(document).ready(function(){
+
+
+		$('.language dt a').click(function(){
+			if($(this).parent().parent().find('dd').css('display')=='none') {
+				$('.language dd').slideDown();
+			}else{
+				$('.language dd').slideUp();
+			}
+			return false;
+		});
+
+
+
+
+	if(viewport.is('>=md')) {
+
+class Scrooth {
+	  constructor({element = window, strength=10, acceleration = 1.2,deceleration = 0.975}={}) {
+		this.element = element;
+		this.distance = strength;
+		this.acceleration = acceleration;
+		this.deceleration = deceleration;
+		this.running = false;
+
+		this.element.addEventListener('wheel', this.scrollHandler.bind(this), {passive: false});
+		this.element.addEventListener('mousewheel', this.scrollHandler.bind(this), {passive: false});
+		this.scroll = this.scroll.bind(this);
+	  }
+
+	  scrollHandler(e) {
+		e.preventDefault();
+
+		if (!this.running) {
+		  this.top = this.element.pageYOffset || this.element.scrollTop || 0;
+		  this.running = true;
+		  this.currentDistance = e.deltaY > 0 ? 0.1 : -0.1;
+		  this.isDistanceAsc = true;
+		  this.scroll();
+		} else {
+		  this.isDistanceAsc = false;
+		  this.currentDistance = e.deltaY > 0 ? this.distance : -this.distance;
+		}
+	  }
+
+	  scroll() {
+		if (this.running) {
+		  this.currentDistance *= this.isDistanceAsc === true ? this.acceleration : this.deceleration;
+		  Math.abs(this.currentDistance) < 0.1 && this.isDistanceAsc === false ? this.running = false : 1;
+		  Math.abs(this.currentDistance) >= Math.abs(this.distance) ? this.isDistanceAsc = false : 1;
+
+		  this.top += this.currentDistance;
+		  this.element.scrollTo(0, this.top);
+		  
+		  requestAnimationFrame(this.scroll);
+		}
+	  }
+	}
+
+	const scroll = new Scrooth({
+	  element: window  ,
+	  strength: 30, //스크롤 한번에 이동하는 거리
+	  acceleration: 0.90,  //가속
+	  deceleration: .875,  //감속
+	});
+
+
+	}
+
+
+
+	//menu
+	$(".menu-open a").click(function() {
+			if(viewport.is('<md')) {	
+				var windowh = $(window).height();
+				$(".m-menu").fadeIn();
+				$(".header").removeClass('write');
+				$(".menu").css("display", "block");
+				 setTimeout(function() { 
+					$(".header").addClass('write');
+				},10);
+			
+				
+				$(".menu-close a").addClass('active'); 
+				$('html,body').css({overflow:'hidden', height:windowh});
+				$('body').bind('touchmove', function(e){e.preventDefault()});
+			}
+		return false;
+	});
+	$(".menu-close a").click(function() {
+		if(viewport.is('<md')) {
+				$(".m-menu").fadeOut();
+				$(this).removeClass('active'); 
+				$(".header ").removeClass('write');
+				$('html,body').removeAttr('style');
+				$('body').unbind('touchmove');
+		}
+		return false;
+	});
+
+
+
+//풋터 관련사이트
+	$('.rel-site dt a').click(function(){
+		
+		if($('.rel-site  dd').css('display') == 'none'){
+			$('.rel-site  dd').slideDown();
+			$(this).removeClass('down');
+			$(this).addClass('up');
+			
+		}else{
+			$('.rel-site  dd').slideUp();
+			$(this).removeClass('up');
+			$(this).addClass('down');
+		}
+		return false;
+	});
+
+	$(window).resize(
+		viewport.changed(function() {
+
+			$('html,body').removeAttr('style');
+			$('body').unbind('touchmove');
+
+			if(viewport.is('>=md')) {
+				$('.m-menu').show();
+			}
+			if(viewport.is('<md')) {
+				$('.m-menu').hide();
+			}
+			
+
+
+		
+
+
+		})
+	);
+
+
+if ($('#backtotop').length) {
+		var scrollTrigger = 100, // px
+			backToTop = function () {
+				var scrollTop = $(window).scrollTop();
+				if (scrollTop > scrollTrigger) {
+					$('#backtotop').addClass('show');
+				} else {
+					$('#backtotop').removeClass('show');
+				}
+			};
+		backToTop();
+		$(window).on('scroll', function () {
+			backToTop();
+		});
+		$('#backtotop').on('click', function (e) {
+			e.preventDefault();
+			$('html,body').animate({
+				scrollTop: 0
+			}, 700);
+		});
+	}
+
+
+	});
+})(jQuery, ResponsiveBootstrapToolkit);
