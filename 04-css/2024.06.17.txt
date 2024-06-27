@@ -1,0 +1,54 @@
+[그누보드]
+https://sir.kr/
+
+그 사이트의 템플릿을 그대로 줌 > 내가 바꿔서 쓸 수 있음
+웹접근성 맞춰져 있음
+[닷홈]호스팅 사이트
+https://www.dothome.co.kr/?gad_source=1&gclid=EAIaIQobChMIrY3-6rvhhgMVNsJMAh1QfQ3tEAAYASAAEgJUBfD_BwE
+웹호스팅> 무료호스팅
+
+컴퓨터 아이피 주소 아는 법(네이버에 아이피주소 검색)
+
+[파일질라]https://filezilla-project.org/
+https://odada.me/6 (설치법 참고)
+서버 바꿔줘야함 > download > 두개중 앞에꺼> 맨앞에꺼
+
+
+사이트관리자열기(왼쪽 위)> 새사이트 > 호스트(=112.175.185.143 or 도메인주소 brillyk.dothome.co.kr)
+포트(=나중에 넣음 닷홈은 안넣어도됨 카페24는 넣어야함) >
+ 고용컴터라서 비밀번호묻기로 할거임 > 개인컴은 일반
+위에 고급(나중에)
+html 만 건드려야함
+http://brillyk.dothome.co.kr/image/4Ofh1pYcyk8qLtAZmoAmrTIOGEI.jpg
+이미지 주소 빼는 법 주소/폴더명/파일이름
+[생략해서 가능]
+/image/4Ofh1pYcyk8qLtAZmoAmrTIOGEI.jpg
+/폴더명/파일이름
+
+
+vscode 확장 > ftp-simple 설치
+ctrl+ p=파일 검색하기
+ctrl+shipt+p=명령어 > ftp-simple : config(속성)
+ctrl+shipt+p=명령어 > ftp-simple : remote(접속)>html선택,체크,신뢰합니다>다운대기
+
+도메인 사이트는 f5말고 ctrl+shipt+r을 해야함=캐쉬비우고 새로고침
+
+
+[그누보드 설치]
+마이닷홈> 추가 및 부가서비스 > cms무료설치>rla97980!>그누보드 선택>설치
+>확인> 사이트들어가면 관리페이지 나옴
+
+admin이 관리자아이디
+
+https://odada.me/230 오다다 그누보드로 어드민 셋팅
+
+[아임웹]
+모듈을 통으로 줌 > 매달 얼마씩 내면 배포해줌
+접근성 못 맞춤
+
+[윅스]
+미국버전 아임웹
+
+[워드브레스]
+뒷단을 미리 만들어 둔 오픈 소스 소프트 웨어
+웹 접근성 맞춰져있지 않음
